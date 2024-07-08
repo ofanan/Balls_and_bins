@@ -7,8 +7,11 @@
 //============================================================================
 
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 #include "settings.h"
+#include "Balls_and_bins.h"
 
 //#include <settings.h>
 //using namespace settings;
@@ -17,12 +20,10 @@ using namespace std;
 //if ( std::find(vec.begin(), vec.end(), item) != vec.end() )
 
 int main() {
-	cout << "Hello World" << endl; // prints Hello World
-	Verbose_t verbose[2]; // = {DEBUG, DEBUG};
-//	if (verbose==DEBUG) {
-//		cout << "DEBUG";
-//	}
-//	int VERBOSE_RES = 5;
-//	cout << VERBOSE_RES << endl;
+//	cout << "Hello World" << endl; // prints Hello World
+	vector <Verbose_t> verbose = {DEBUG, DEBUG};
+	if ( std::find(verbose.begin(), verbose.end(), DEBUG) != verbose.end() ) {
+		cout << "DEBUG";
+	}
 	return 0;
 }
