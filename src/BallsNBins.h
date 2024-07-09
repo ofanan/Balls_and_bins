@@ -32,7 +32,12 @@ class BallsNBins {
 
 	string genSettingStr ();
 	public:
-	BallsNBins  (long numBalls, uint32_t numBins, uint32_t numSmpls, vector <Verbose_t> verobse);
+	BallsNBins  (
+			long 				numBalls,
+			uint32_t 			numBins,
+			uint32_t 			numSmpls, // num of bins to sample before selecting a bin
+			vector <Verbose_t> 	verbose // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
+	);
 	~BallsNBins ();
 
 
