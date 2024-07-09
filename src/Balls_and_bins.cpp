@@ -27,7 +27,19 @@ void Balls_and_bins::open_output_files ()
 //		resFile << "// Mode is the algorithm / solver used. Possble modes are:"  << endl;
 //	}
 
-	res_file.open ("bb.res");
+	if (std::find(verbose.begin(), verbose.end(), RES) != verbose.end() ) {
+		string res_file_name = "bb.res";
+//			if (fileExists (res_file_name)) {
+//			  resFile.open(res_file_name, std::ios_base::app);
+//			}
+//			else {
+//				resFile.open(res_file_name);
+//				resFile << "// format: t{T}.{Mode}.cpu{C}.stts{s} | cpu_cost=... | link_cost=... | mig_cost=... | cost=... | ratio=[c,l,m] c | resh=lvl, , where" << endl;
+//				resFile << "// T is the slot cnt (read from the input file)" << endl;
+//				resFile << "// Mode is the algorithm / solver used. Possble modes are:"  << endl;
+//			}
+	}
+//	res_file.open ();
 
 }
 
