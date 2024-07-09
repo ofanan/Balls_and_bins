@@ -33,6 +33,13 @@ void printToLog (ofstream log_file, vector <Bin_t> vec)
 	log_file << "]" << endl;
 }
 
+void Balls_and_bins::func_in_me ()
+{
+	log_file << "regerg";
+	return;
+}
+
+
 /*************************************************************************************************************************************************
 Open the output files:.log, .res, based on the chosen verbose option.
 *************************************************************************************************************************************************/
@@ -47,8 +54,8 @@ void Balls_and_bins::open_output_files ()
 //	if (settings::file_exists (res_file_name)) {
 	res_file.open(res_file_name, std::ios_base::app);
 	ofstream gamad_of;
-	gamad_of.open ("rgrg", std::ofstream::app);
-//	func_in_settings (gamad_of);
+//	gamad_of.open ("rgrg", std::ofstream::app);
+	func_in_me ();
 //	}
 //	else {
 	res_file.open(res_file_name);

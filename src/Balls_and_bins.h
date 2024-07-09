@@ -26,6 +26,8 @@ class Balls_and_bins {
 
 	void open_output_files ();
 
+	void func_in_me ();
+
 	string gen_setting_str ();
 	public:
 	Balls_and_bins  ();
