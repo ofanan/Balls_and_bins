@@ -4,3 +4,4 @@
 /.settings/*
 /res/*
 /log_files/*
+!/res
