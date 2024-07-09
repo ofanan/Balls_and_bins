@@ -16,22 +16,22 @@ const long MAX_BIN_VAL = ((uint32_t)-1); // max representatable value for Bin_t.
 const int num_of_exps = 1;
 //typedef int gamad;
 
-class Balls_and_bins {
-	long 			num_balls;
-	uint32_t 		num_bins;
+class BallsNBins {
+	long 			numBalls;
+	uint32_t 		numBins;
 	vector <Bin_t> 	bins;
-	ofstream 		log_file;
-	ofstream 		res_file;
+	ofstream 		logFile;
+	ofstream 		resFile;
 	vector <Verbose_t> verbose; // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
 
-	void open_output_files ();
+	void openOutputFiles ();
 
 	void func_in_me ();
 
-	string gen_setting_str ();
+	string genSettingStr ();
 	public:
-	Balls_and_bins  ();
-	~Balls_and_bins ();
+	BallsNBins  ();
+	~BallsNBins ();
 
 
 };
