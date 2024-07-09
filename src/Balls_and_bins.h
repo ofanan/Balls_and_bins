@@ -23,6 +23,7 @@ class Balls_and_bins {
 	vector <Verbose_t> verbose; // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
 
 	void open_output_files ();
+
 	string gen_setting_str ();
 	public:
 	Balls_and_bins  ();
