@@ -11,10 +11,12 @@
 /*************************************************************************************************************************************************
 Open the output files:.log, .res, based on the chosen verbose option.
 *************************************************************************************************************************************************/
-void Balls_and_bins::open_output_fiels ()
+void Balls_and_bins::open_output_files ()
 {
-	log_file.open ("reggre");
 
+	if (std::find(verbose.begin(), verbose.end(), LOG) != verbose.end() ) {
+		log_file.open ("bb.log");
+	}
 //	if (fileExists (resFileName)) {
 //	  resFile.open(resFileName, std::ios_base::app);
 //	}
@@ -25,7 +27,7 @@ void Balls_and_bins::open_output_fiels ()
 //		resFile << "// Mode is the algorithm / solver used. Possble modes are:"  << endl;
 //	}
 
-	res_file.open ("reggre");
+	res_file.open ("bb.res");
 
 }
 
@@ -54,10 +56,10 @@ Balls_and_bins::~Balls_and_bins ()
 
 int main() {
 //	cout << "Hello World" << endl; // prints Hello World
-	vector <Verbose_t> verbose = {DEBUG, DEBUG};
-	if ( std::find(verbose.begin(), verbose.end(), DEBUG) != verbose.end() ) {
-		cout << "DEBUG";
-	}
+//	vector <Verbose_t> verbose = {DEBUG, DEBUG};
+//	if ( std::find(verbose.begin(), verbose.end(), DEBUG) != verbose.end() ) {
+//		cout << "DEBUG";
+//	}
 //	vector <int> nisui = {3,5};
 //	cout << nisui;
 	return 0;
