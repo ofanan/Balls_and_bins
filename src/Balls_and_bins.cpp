@@ -40,16 +40,15 @@ void Balls_and_bins::open_output_files ()
 {
 
 //	if (std::find(verbose.begin(), verbose.end(), LOG) != verbose.end() ) {
-		log_file.open ("bb.log");
+	log_file.open ("bb.log");
 //	}
-	bins.push_back (3);
-//	func_in_settings (log_file);
-//	printToLog (log_file);
-//	printToLog (log_file);
-//	settings::printToLog (log_file, bins);
+//	bins.push_back (3);
 	string res_file_name = "abcd.txt";
 //	if (settings::file_exists (res_file_name)) {
 	res_file.open(res_file_name, std::ios_base::app);
+	ofstream gamad_of;
+	gamad_of.open ("rgrg", std::ofstream::app);
+//	func_in_settings (gamad_of);
 //	}
 //	else {
 	res_file.open(res_file_name);

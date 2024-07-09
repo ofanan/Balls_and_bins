@@ -7,19 +7,6 @@
 //	return (name.c_str(), &buffer) == 0;
 //}
 //
-//static void printToLog (ofstream log_file, vector <Bin_t> vec)
-//{
-//	log_file << "[";
-//	for (const auto bin : vec) {
-//		log_file << bin << " ";
-//	}
-//	log_file << "]" << endl;
-//}
-
-void printToLog (ofstream log_file)
-{
-	return;
-}
 
 void func_in_settings (ofstream log_file)
 {

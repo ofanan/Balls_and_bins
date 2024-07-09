@@ -13,8 +13,7 @@ const float CONF_LVL =0.95;
 
 //void func_in_settings (int x);
 void func_in_settings (ofstream log_file);
-//void printToLog (ofstream log_file);
-//void printToLog (ofstream log_file, vector <Bin_t> vec);
+//void func_in_settings (ofstream log_file);
 
 //class settings {
 //
