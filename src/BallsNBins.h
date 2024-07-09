@@ -23,7 +23,7 @@ class BallsNBins {
 	vector <Bin_t> 		bins;
 	ofstream 			logFile;
 	ofstream 			resFile;
-	vector <Verbose_t> 	verbose = {RES}; // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
+	vector <Verbose_t> 	verbose; // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
 	uint8_t				seed = 42;
 
 	void openOutputFiles ();
@@ -36,7 +36,7 @@ class BallsNBins {
 			long 				numBalls,
 			uint32_t 			numBins,
 			uint32_t 			numSmpls, // num of bins to sample before selecting a bin
-			vector <Verbose_t> 	verbose // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
+			vector <Verbose_t>& verbose // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
 	);
 	~BallsNBins ();
 

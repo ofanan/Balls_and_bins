@@ -7,25 +7,26 @@
 #include "BallsNBins.h"
 
 
-BallsNBins::BallsNBins (long numBalls, uint32_t numBins, uint32_t numSmpls, vector <Verbose_t> verobse)
+BallsNBins::BallsNBins (long numBalls, uint32_t numBins, uint32_t numSmpls, vector <Verbose_t>& verbose)
 {
 	this->numBalls	= numBalls;
 	this->numBins	= numBins;
 	this->numSmpls	= numSmpls; // num of bins to sample before selecting a bin
 	this->verbose 	= verbose;  // verbose level, a defined in settings.h, e.gBallsNBins.: LOG, DEBUG.
+//	cout << int(this->verbose[0]);
 	seed 			= 42;
-	bins.reserve 	(numBins);
-//	cout << (this->verbose[1]);
-	vector <int> verbose_vec; // = {1}; //{RES, LOG};
-
-//	openOutputFiles 	   ();
+	openOutputFiles ();
 }
 
 BallsNBins::~BallsNBins ()
 {
 	bins.clear ();
-//	logFile.close ();
-//	resFile.close ();
+	if (std::find(verbose.begin(), verbose.end(), LOG) != verbose.end() ) {
+		logFile.close ();
+	}
+	if (std::find(verbose.begin(), verbose.end(), RES) != verbose.end() ) {
+		resFile.close ();
+	}
 }
 
 
@@ -46,10 +47,8 @@ Open the output files:.log, .res, based on the chosen verbose option.
 *************************************************************************************************************************************************/
 void BallsNBins::openOutputFiles ()
 {
-/*
-	string logFileName = "bb_" + genSettingStr() + ".log";
+	string logFileName = "log_files/bb_" + genSettingStr() + ".log";
 	if (std::find(verbose.begin(), verbose.end(), LOG) != verbose.end() ) {
-		cout << "1" << endl;
 		if (fileExists (logFileName)) {
 			  resFile.open(logFileName, std::ios_base::app);
 		}
@@ -58,7 +57,7 @@ void BallsNBins::openOutputFiles ()
 		}
 	}
 	if (std::find(verbose.begin(), verbose.end(), LOG) != verbose.end() ) {
-		string resFileName = "../bb.res";
+		string resFileName = "res/bb.res";
 		if (fileExists (resFileName)) {
 			  resFile.open(resFileName, std::ios_base::app);
 		}
@@ -69,20 +68,6 @@ void BallsNBins::openOutputFiles ()
 			resFile << "// Mode is the algorithm / solver used. Possble modes are:"  << endl;
 		}
 	}
-//	if (std::find(verbose.begin(), verbose.end(), RES) != verbose.end() ) {
-//		string resFile_name = "bb.res";
-//			if (fileExists (resFile_name)) {
-//			  resFile.open(resFile_name, std::ios_base::app);
-//			}
-//			else {
-//				resFile.open(resFile_name);
-//				resFile << "// format: t{T}.{Mode}.cpu{C}.stts{s} | cpu_cost=... | link_cost=... | mig_cost=... | cost=... | ratio=[c,l,m] c | resh=lvl, , where" << endl;
-//				resFile << "// T is the slot cnt (read from the input file)" << endl;
-//				resFile << "// Mode is the algorithm / solver used. Possble modes are:"  << endl;
-//			}
-//	}
-//	resFile.open ();
-*/
 }
 
 /*************************************************************************************************************************************************
@@ -96,15 +81,20 @@ string BallsNBins::genSettingStr ()
 
 //if ( std::find(vec.begin(), vec.end(), item) != vec.end() )
 int main() {
+//	vector <Verbose_t> verbose = {LOG};
+//	cout << int(verbose[0]); // <<", " << int(verbose[1]);
+//	if (find(verbose.begin(), verbose.end(), RES) != verbose.end() ) {
+//		cout << "res";
+//	}
+//
+////	cout << verbose[1];
+////	int i = 3;
+//	return 0;
 	vector <Verbose_t> verbose = {RES, LOG};
-//	cout << verbose[1];
 	BallsNBins bb = BallsNBins (
 			4, 	// numBalls
 			3, 	// numBins
 			1,	// numSmpl
 			verbose // verbose
 	);
-//	vector <int8_t> verbose_vec = {RES};
-//	cout << verbose_vec[0];
-	return 0;
 }
