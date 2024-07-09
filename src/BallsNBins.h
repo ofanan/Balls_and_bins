@@ -17,7 +17,8 @@ const int num_of_exps = 1;
 //typedef int gamad;
 
 class BallsNBins {
-	long 				numBalls;
+	unsigned long 		numBalls;
+	unsigned long 		ballNum;
 	uint32_t 			numBins;
 	uint32_t 			numSmpls;
 	vector <Bin_t> 		bins;
@@ -26,6 +27,7 @@ class BallsNBins {
 	vector <Verbose_t> 	verbose; // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
 	uint8_t				seed = 42;
 
+
 	void openOutputFiles ();
 
 	void func_in_me ();
@@ -33,12 +35,13 @@ class BallsNBins {
 	string genSettingStr ();
 	public:
 	BallsNBins  (
-			long 				numBalls,
+			unsigned long 		numBalls,
 			uint32_t 			numBins,
 			uint32_t 			numSmpls, // num of bins to sample before selecting a bin
 			vector <Verbose_t>& verbose // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
 	);
 	~BallsNBins ();
+	void sim (int numExps);
 
 
 };

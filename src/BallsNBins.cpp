@@ -7,13 +7,12 @@
 #include "BallsNBins.h"
 
 
-BallsNBins::BallsNBins (long numBalls, uint32_t numBins, uint32_t numSmpls, vector <Verbose_t>& verbose)
+BallsNBins::BallsNBins (unsigned long numBalls, uint32_t numBins, uint32_t numSmpls, vector <Verbose_t>& verbose)
 {
 	this->numBalls	= numBalls;
 	this->numBins	= numBins;
 	this->numSmpls	= numSmpls; // num of bins to sample before selecting a bin
 	this->verbose 	= verbose;  // verbose level, a defined in settings.h, e.gBallsNBins.: LOG, DEBUG.
-//	cout << int(this->verbose[0]);
 	seed 			= 42;
 	openOutputFiles ();
 }
@@ -75,9 +74,27 @@ Return a string that details the simulation's parameters.
 *************************************************************************************************************************************************/
 string BallsNBins::genSettingStr ()
 {
-	return string("balls") + to_string(numBalls) + string("bins") + to_string(numBalls) + string("d") + to_string(seed);
+	return string("balls") + to_string(numBalls) + string("bins") + to_string(numBalls) + string("d") + to_string(numSmpls);
 }
 
+/*************************************************************************************************************************************************
+Simulate balls and bins
+*************************************************************************************************************************************************/
+void BallsNBins::sim (int numExps)
+{
+	int gamad;
+	vector <unsigned long> maxLd;
+	maxLd.reserve (numExps);
+	for (int exp(0); exp<numExps; exp++) {
+		fill(bins.begin(), bins.end(), 0); // empty all the bins
+
+		for (ballNum = 0; ballNum<numBalls; ballNum++) {
+			gamad = 1;
+		}
+
+
+	}
+}
 
 //if ( std::find(vec.begin(), vec.end(), item) != vec.end() )
 int main() {
