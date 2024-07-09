@@ -13,13 +13,20 @@ Open the output files:.log, .res, based on the chosen verbose option.
 *************************************************************************************************************************************************/
 void Balls_and_bins::open_output_fiels ()
 {
-}
+	log_file.open ("reggre");
 
-/*************************************************************************************************************************************************
-Close the open output files, based on the verbose option.
-*************************************************************************************************************************************************/
-void Balls_and_bins::close_output_fiels ()
-{
+//	if (fileExists (resFileName)) {
+//	  resFile.open(resFileName, std::ios_base::app);
+//	}
+//	else {
+//		resFile.open(resFileName);
+//		resFile << "// format: t{T}.{Mode}.cpu{C}.stts{s} | cpu_cost=... | link_cost=... | mig_cost=... | cost=... | ratio=[c,l,m] c | resh=lvl, , where" << endl;
+//		resFile << "// T is the slot cnt (read from the input file)" << endl;
+//		resFile << "// Mode is the algorithm / solver used. Possble modes are:"  << endl;
+//	}
+
+	res_file.open ("reggre");
+
 }
 
 /*************************************************************************************************************************************************
@@ -27,14 +34,19 @@ Generate a string that details the simulation's configuration
 *************************************************************************************************************************************************/
 string Balls_and_bins::gen_setting_str ()
 {
+	return "erer";
 }
 
 Balls_and_bins::Balls_and_bins ()
 {
+	bins.reserve (num_bins);
 }
 
 Balls_and_bins::~Balls_and_bins ()
 {
+	bins.clear ();
+	log_file.close ();
+	res_file.close ();
 }
 
 
