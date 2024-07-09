@@ -1,3 +1,8 @@
+//============================================================================
+// Author      : Itamar Cohen
+// Description : Header, containing declaration of types and accessory functions
+//				 used throughout this project.
+//============================================================================
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
@@ -7,6 +12,8 @@
 #include <unistd.h>
 #include <string>
 #include <fstream>
+
+
 
 enum Verbose_t {RES, LOG, LOG_END_SIM, DEBUG};
 const float CONF_LVL =0.95;
