@@ -11,9 +11,10 @@ BallsNBins::BallsNBins (unsigned long numBalls, unsigned numBins, vector <Verbos
 {
 	this->numBalls	= numBalls;
 	this->numBins	= numBins;
-	this->bins.reserve(numBins);
 	this->verbose 	= verbose;  // verbose level, a defined in settings.h, e.gBallsNBins.: LOG, DEBUG.
 	seed 			= 42;
+	vector<Bin_t> tmp(numBins);
+	bins = tmp;
 }
 
 BallsNBins::~BallsNBins ()
@@ -103,13 +104,11 @@ void BallsNBins::sim (
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<> dis(0, numBins - 1);
 	openOutputFiles ();
-	cout << "Starting sim. NumExps=" << numExps << ", numBalls=" << numBalls << ", numBins=" << numBins << endl;
 
 	for (unsigned exp(0); exp<numExps; exp++) {
 		srand(seed + exp); // set the seed of random num generation
 		fill(bins.begin(), bins.end(), 0); // empty all the bins
 		for (ball = 0; ball<numBalls; ball++) {
-			cout << "in for ball" << endl;
 
 			switch (numSmpls) {
 
@@ -133,29 +132,13 @@ void BallsNBins::sim (
 					}
 					break;
 			}
-			vector <int> intVec = {1, 2};
-			intVec[0] = 7;
-			cout << intVec[0] << " * " << endl;
-			fill(bins.begin(), bins.end(), 5); // empty all the bins
-			intVec[0] = bins[0];
-
-			fill(bins.begin(), bins.end(), 5); // empty all the bins
-			intVec[0] = bins[0];
-			cout << intVec[0] << " * " << endl;
-			cout << bins[0] << " * " << endl << flush;
-			cout << int(bins[0]) << endl << flush;
-			exit (0);
-			cout << "chosenBin=" << chosenBin << this->bins[0] << endl; //##$$$
-			cout << bins[0] << endl; //##$$$
-			bins[chosenBin]++;
+			fill(bins.begin(), bins.end(), 0); // empty all the bins
 			if (std::find(verbose.begin(), verbose.end(), DEBUG) != verbose.end() ) {
 				if (bins[chosenBin]>=MAX_BIN_VAL) {
 					printErrStrAndExit ("In BallsNBins.sim(). bin #" + to_string(chosenBin) + "reached its maximal value. Please use a larger bit width for Bin_t in BallsNBins.h");
 				}
 			}
-			cout << "here5" << endl;
 			if (exp==0 && std::find(verbose.begin(), verbose.end(), LOG) != verbose.end() ) { //consider logging only in the first experiment
-				cout << "here7";
 				printAllBinsToLog ();
 			}
 		} // end of this experiment
@@ -175,9 +158,6 @@ void BallsNBins::sim (
 
 int main() {
 	vector <Verbose_t> verbose = {LOG};
-//	vector <int> intVec = {1, 2};
-//	fill(intVec.begin(), intVec.end(), 0); // empty all the bins
-//	cout << intVec[0] << endl;
 	BallsNBins bb = BallsNBins (
 		4, 	// numBalls
 		3, 	// numBins
