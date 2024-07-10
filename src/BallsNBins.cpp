@@ -95,29 +95,6 @@ void BallsNBins::sim (
 	std::mt19937 rng(rd());
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<> dis(0, numBins - 1);
-	/*
-	switch (numSmpls) {
-
-		case 0: {
-			void ();
-		}
-		case 1: {
-			std::random_device rd;
-			std::mt19937 rng(rd());
-			std::mt19937 gen(rd());
-			std::uniform_int_distribution<> dis(0, numBins - 1);
-//			int num = dis(gen);
-			chosenBin = dis(gen);
-
-		}
-		default:
-			void ();
-//			std::unordered_set<unsigned> samples;
-//			std::random_device rd;
-//			std::mt19937 gen(rd());
-//			std::uniform_int_distribution<> dis(0, numBins - 1);
-//			int num = dis(gen);
-	*/
 	cout << "Starting sim. NumExps=" << numExps << ", numBalls=" << numBalls << ", numBins=" << numBins << endl;
 
 	for (unsigned exp(0); exp<numExps; exp++) {
@@ -132,7 +109,17 @@ void BallsNBins::sim (
 			case 1:
 				chosenBin = dis(gen);
 			default:
-				void ();
+				unsigned scndBin;
+				chosenBin = dis(gen);
+				while (true) {
+					scndBin = dis(gen);
+					if (scndBin!=chosenBin) { // Assure that we don't sample the same bin again
+						if (bins[scndBin]<bins[chosenBin]) {
+							chosenBin =scndBin;
+						}
+						break;
+					}
+				}
 		}
 
 //		for (ballNum = 0; ballNum<numBalls; ballNum++) {
