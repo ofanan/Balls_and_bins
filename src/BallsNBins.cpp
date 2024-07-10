@@ -75,10 +75,10 @@ string BallsNBins::genSettingStr ()
 {
 	string settingStr =
 			string("balls") + to_string(numBalls) +
-			string("bins") + to_string(numBins) +
-			string("d") + to_string(numSmpls);
+			string("_bins") + to_string(numBins) +
+			string("_d") + to_string(numSmpls);
 	if (allowRepetitions && numSmpls>1) {
-		settingStr += "R";
+		settingStr += "_R";
 	}
 	return settingStr;
 }
@@ -98,7 +98,8 @@ void BallsNBins::sim (
 		printErrStrAndExit ("BallsNBins.sim() was called with numSmpls=" + to_string(numSmpls) + "numSmpls should be either 0, 1, or 2.");
 	}
 	vector <Bin_t> maxLd; // maxLd[exp] will hold the maximal load observed at experiment exp.
-	maxLd.reserve (numExps);
+	vector<Bin_t> tmp(numBins);
+	maxLd= tmp;
 	std::random_device rd;
 	std::mt19937 rng(rd());
 	std::mt19937 gen(rd());
@@ -145,9 +146,7 @@ void BallsNBins::sim (
 		maxLd[exp] = *std::max_element(std::begin(bins), std::end(bins));
 	}
 	if (std::find(verbose.begin(), verbose.end(), RES) != verbose.end() ) {
-		double average = std::accumulate(maxLd.begin(), maxLd.end(), 0.0) / maxLd.size();
-
-		// Calculate the standard deviation
+		double average = accumulate(maxLd.begin(), maxLd.end(), 0.0) / maxLd.size();
 		double stddev = std::sqrt(std::accumulate(maxLd.begin(), maxLd.end(), 0.0,
 					   [average](double sum, int val) { return sum + std::pow(val - average, 2); }) / maxLd.size());
 		resFile << genSettingStr() << " avg=" << average << " (std/avg)=" << stddev/average << endl;
@@ -157,7 +156,7 @@ void BallsNBins::sim (
 }
 
 int main() {
-	vector <Verbose_t> verbose = {LOG};
+	vector <Verbose_t> verbose = {LOG, RES};
 	BallsNBins bb = BallsNBins (
 		4, 	// numBalls
 		3, 	// numBins
