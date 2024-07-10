@@ -19,8 +19,8 @@ const int num_of_exps = 1;
 class BallsNBins {
 	unsigned long 		numBalls;
 	unsigned long 		ballNum;
-	uint32_t 			numBins;
-	uint32_t 			numSmpls;
+	unsigned  			numBins;
+	unsigned  			numSmpls;
 	vector <Bin_t> 		bins;
 	ofstream 			logFile;
 	ofstream 			resFile;
@@ -35,13 +35,15 @@ class BallsNBins {
 	string genSettingStr ();
 	public:
 	BallsNBins  (
-			unsigned long 		numBalls,
-			uint32_t 			numBins,
-			uint32_t 			numSmpls, // num of bins to sample before selecting a bin
-			vector <Verbose_t>& verbose // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
+		unsigned long 		numBalls,
+		unsigned  			numBins,
+		vector <Verbose_t>& verbose // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
 	);
 	~BallsNBins ();
-	void sim (int numExps);
+	void sim (
+		unsigned numExps,
+		unsigned numSmpls //number of samples. When 0 (sample all bins). Otherwise, sample numSmpl bins and use the minimal.
+	);
 
 
 };

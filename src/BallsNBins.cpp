@@ -7,11 +7,10 @@
 #include "BallsNBins.h"
 
 
-BallsNBins::BallsNBins (unsigned long numBalls, uint32_t numBins, uint32_t numSmpls, vector <Verbose_t>& verbose)
+BallsNBins::BallsNBins (unsigned long numBalls, unsigned numBins, vector <Verbose_t>& verbose)
 {
 	this->numBalls	= numBalls;
 	this->numBins	= numBins;
-	this->numSmpls	= numSmpls; // num of bins to sample before selecting a bin
 	this->verbose 	= verbose;  // verbose level, a defined in settings.h, e.gBallsNBins.: LOG, DEBUG.
 	seed 			= 42;
 	openOutputFiles ();
@@ -80,38 +79,40 @@ string BallsNBins::genSettingStr ()
 /*************************************************************************************************************************************************
 Simulate balls and bins
 *************************************************************************************************************************************************/
-void BallsNBins::sim (int numExps)
+void BallsNBins::sim (
+		unsigned numExps,
+		unsigned numSmpls
+		)
 {
-	int gamad;
+	this->numSmpls	= numSmpls; //number of samples. When 0 (sample all bins). Otherwise, sample numSmpl bins and use the minimal.
+	if (numSmpls>=numBins) {
+		perror ("rgrg");
+	}
 	vector <unsigned long> maxLd;
 	maxLd.reserve (numExps);
-	for (int exp(0); exp<numExps; exp++) {
+	cout << "Starting sim. NumExps=" << numExps << ", numBalls=" << numBalls << ", numBins=" << numBins << endl;
+	for (unsigned exp(0); exp<numExps; exp++) {
 		fill(bins.begin(), bins.end(), 0); // empty all the bins
-
-		for (ballNum = 0; ballNum<numBalls; ballNum++) {
-			gamad = 1;
-		}
+//
+//		switch numSmpls:
+//
+//		case 0:
+//			chosenBin =
+//
+//		for (ballNum = 0; ballNum<numBalls; ballNum++) {
+//			gamad = 1;
+//		}
 
 
 	}
 }
 
-//if ( std::find(vec.begin(), vec.end(), item) != vec.end() )
 int main() {
-//	vector <Verbose_t> verbose = {LOG};
-//	cout << int(verbose[0]); // <<", " << int(verbose[1]);
-//	if (find(verbose.begin(), verbose.end(), RES) != verbose.end() ) {
-//		cout << "res";
-//	}
-//
-////	cout << verbose[1];
-////	int i = 3;
-//	return 0;
 	vector <Verbose_t> verbose = {RES, LOG};
 	BallsNBins bb = BallsNBins (
 			4, 	// numBalls
 			3, 	// numBins
-			1,	// numSmpl
 			verbose // verbose
 	);
+	bb.sim (1, 1);
 }
