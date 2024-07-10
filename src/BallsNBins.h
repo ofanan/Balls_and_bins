@@ -6,6 +6,8 @@
 #include <vector>
 #include <algorithm>
 #include <stdint.h>
+#include <random>
+#include <unordered_set>
 using namespace std;
 
 #include "settings.h"

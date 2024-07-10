@@ -85,34 +85,72 @@ void BallsNBins::sim (
 		)
 {
 	this->numSmpls	= numSmpls; //number of samples. When 0 (sample all bins). Otherwise, sample numSmpl bins and use the minimal.
-	if (numSmpls>=numBins) {
-		perror ("rgrg");
+	if (numSmpls>2) {
+		printErrStrAndExit ("sim() was called with numSmpls=" + to_string(numSmpls) + "numSmpls should be either 0, 1, or 2.");
 	}
 	vector <unsigned long> maxLd;
 	maxLd.reserve (numExps);
+	unsigned chosenBin;
+	std::random_device rd;
+	std::mt19937 rng(rd());
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> dis(0, numBins - 1);
+	/*
+	switch (numSmpls) {
+
+		case 0: {
+			void ();
+		}
+		case 1: {
+			std::random_device rd;
+			std::mt19937 rng(rd());
+			std::mt19937 gen(rd());
+			std::uniform_int_distribution<> dis(0, numBins - 1);
+//			int num = dis(gen);
+			chosenBin = dis(gen);
+
+		}
+		default:
+			void ();
+//			std::unordered_set<unsigned> samples;
+//			std::random_device rd;
+//			std::mt19937 gen(rd());
+//			std::uniform_int_distribution<> dis(0, numBins - 1);
+//			int num = dis(gen);
+	*/
 	cout << "Starting sim. NumExps=" << numExps << ", numBalls=" << numBalls << ", numBins=" << numBins << endl;
+
 	for (unsigned exp(0); exp<numExps; exp++) {
+		srand(seed + exp); // set the seed of random num generation
+
 		fill(bins.begin(), bins.end(), 0); // empty all the bins
-//
-//		switch numSmpls:
-//
-//		case 0:
-//			chosenBin =
-//
+
+		switch (numSmpls) {
+
+			case 0:
+				chosenBin = distance(begin(bins), min_element(begin(bins), end(bins)));
+			case 1:
+				chosenBin = dis(gen);
+			default:
+				void ();
+		}
+
 //		for (ballNum = 0; ballNum<numBalls; ballNum++) {
-//			gamad = 1;
+//			chosenBin = 7;
 //		}
-
-
 	}
+
 }
 
 int main() {
 	vector <Verbose_t> verbose = {RES, LOG};
 	BallsNBins bb = BallsNBins (
-			4, 	// numBalls
-			3, 	// numBins
-			verbose // verbose
+		4, 	// numBalls
+		3, 	// numBins
+		verbose // verbose
 	);
-	bb.sim (1, 1);
+	bb.sim (
+		1, 	// numExps
+		0	// numSmpls
+	);
 }
