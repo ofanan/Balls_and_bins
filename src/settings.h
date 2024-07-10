@@ -25,9 +25,7 @@ const float CONF_LVL =0.95;
 # include "BallsNBins.h"
 
 bool fileExists (const std::string& name); // returns true iff the given fileName already exists
-
-//void conf_interval (vector <ar>, avg, confLvl=0.95 : st.t.interval (confLvl, len(ar)-1, loc=avg, scale=st.sem(ar)) if np.std(ar)>0 else [avg, avg]
-
 void printErrStrAndExit (const string &errorMsgStr);
+//void printVecToLog (ofstream logFile, vector <Bin_t> vec); // Print a vector to a log file
 
 #endif
