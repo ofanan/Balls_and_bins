@@ -132,7 +132,7 @@ void BallsNBins::sim (
 					}
 					break;
 			}
-			fill(bins.begin(), bins.end(), 0); // empty all the bins
+			bins[chosenBin]++;
 			if (std::find(verbose.begin(), verbose.end(), DEBUG) != verbose.end() ) {
 				if (bins[chosenBin]>=MAX_BIN_VAL) {
 					printErrStrAndExit ("In BallsNBins.sim(). bin #" + to_string(chosenBin) + "reached its maximal value. Please use a larger bit width for Bin_t in BallsNBins.h");
