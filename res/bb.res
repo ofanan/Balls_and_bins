@@ -4,14 +4,15 @@
 // W==1 if we allow repetitions, else W==0.
 // A is the maximal load, averaged over the experiments done. 
 // S is the ratio: standard variation of the experiments, over the maximal load.
-balls10000.bins16.d0.R0 | avg=195.312 | std_over_avg=1.53188
-balls10000.bins16.d1.R0 | avg=207.812 | std_over_avg=1.53221
-balls10000.bins16.d2.R0 | avg=195.688 | std_over_avg=1.53188
-balls10000.bins16.d2.R1 | avg=195.75 | std_over_avg=1.53188
-balls10000.bins32.d0.R0 | avg=48.9062 | std_over_avg=2.36097
-balls10000.bins32.d1.R0 | avg=54.9375 | std_over_avg=2.36221
-balls10000.bins32.d2.R0 | avg=49.0938 | std_over_avg=2.36098
-balls10000.bins32.d2.R1 | avg=49.0625 | std_over_avg=2.36097
-
-
 balls10000.bins16.d0.R0 | avg=625 | std_over_avg=0
+balls10000.bins16.d1.R0 | avg=670.2 | std_over_avg=0.0185891
+balls10000.bins16.d2.R0 | avg=626.21 | std_over_avg=0.000653711
+balls10000.bins16.d2.R1 | avg=626.39 | std_over_avg=0.000814823
+balls10000.bins32.d0.R0 | avg=313 | std_over_avg=0
+balls10000.bins32.d1.R0 | avg=350.31 | std_over_avg=0.0269432
+balls10000.bins32.d2.R0 | avg=314.08 | std_over_avg=0.000978994
+balls10000.bins32.d2.R1 | avg=314.06 | std_over_avg=0.000884538
+balls10000.bins10000.d0.R0 | avg=1 | std_over_avg=0
+balls10000.bins10000.d1.R0 | avg=6.68 | std_over_avg=0.0874193
+balls10000.bins10000.d2.R0 | avg=3.06 | std_over_avg=0.0780011
+balls10000.bins10000.d2.R1 | avg=3.1 | std_over_avg=0.0972617

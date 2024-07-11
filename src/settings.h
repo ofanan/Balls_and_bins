@@ -25,5 +25,4 @@ const float CONF_LVL =0.95;
 # include "BallsNBins.h"
 
 void printErrStrAndExit (const string &errorMsgStr);
-//template<typename Type> void printVec (vector <Type> const &v);
 #endif

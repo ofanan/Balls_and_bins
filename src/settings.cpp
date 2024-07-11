@@ -14,20 +14,3 @@ void printErrStrAndExit (const string &errorMsgStr)
 	cerr << errorMsg;
 	exit (0);
 }
-
-//float generic average (const vector <int>)
-//{
-//}
-
-///*************************************************************************************************************************************************
-//Print a vector to a log file
-//*************************************************************************************************************************************************/
-//void printVecToLog (ofstream logFile, vector <Bin_t> vec)
-//{
-//	logFile << "[";
-//	for (const auto bin : vec) {
-//		logFile << bin << " ";
-//	}
-//	logFile << "]" << endl;
-//}
-

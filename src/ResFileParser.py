@@ -50,7 +50,7 @@ class ResFileParser (object):
             'numBalls'      : int (splittedSettingStr [ballsIdx].split("balls")[1]),   
             'numBins'       : int (splittedSettingStr  [binsIdx].split("bins")[1]),   
             'd'             : int (splittedSettingStr  [smplsIdx].split("d")[1]),   
-            'Repet'         : int (splittedSettingStr  [repetIdx].split("R")[1]),   
+            'repet'         : int (splittedSettingStr  [repetIdx].split("R")[1]),   
             'maxLd'         : maxLd,
             'stdOverAvg'    : stdOverAvg
             }
@@ -83,12 +83,33 @@ class ResFileParser (object):
                     self.listOfDicts.append(self.dict)
                         
             self.inputFile.close
-        print (self.listOfDicts)
+
+    def genBars (
+        self,
+        numBalls    = 10000,
+        numBins     = 16,
+        numOfBars   = 3
+        ):
+        
+        lowerBnd    = numBalls/numBins
+        points      = [point for point in self.listOfDicts if point['numBalls']==numBalls and point['numBins']==numBalls]
+        fig         = plt.figure () #(figsize =(10, 7))
+        maxLd       = np.zeros (numOfBars) 
+        for d in range(numOfBars):
+            pointsWithThisD = [point for point in points if point['d']==d and point['repet']==0]
+            if len(pointsWithThisD)==0:
+                warning (f'genBars did not find points with numBalls={numBalls}, numBalls={numBins}, d={d}')
+            if len(pointsWithThisD)==2:
+                warning (f'genBars found 2 points with numBalls={numBalls}, numBalls={numBins}, d={d}, repet=0. taking the first one')
+            maxLd[d] = point['maxLd']
+        plt.bar(d, maxLd)
+
 
 if __name__ == '__main__':
     try:
         rfp = ResFileParser()
         rfp.parseFiles (['bb.res'])
+        rfp.genBars (numBins=16)
     except KeyboardInterrupt:
         print('Keyboard interrupt.')
 

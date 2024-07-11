@@ -26,8 +26,8 @@ template<typename Type> double mean (vector <Type> const &v)
     if(v.empty()){
         return 0;
     }
-    auto const count = static_cast<double>(v.size());
-    return std::reduce(v.begin(), v.end()) / count;
+    double sum = std::reduce(std::begin(v), std::end(v), 0.0);
+    return  sum / v.size();
 }
 
 /*************************************************************************************************************************************************
@@ -197,9 +197,12 @@ void BallsNBins::sim (
 			}
 		} // end of this experiment
 		maxLd[exp] = *std::max_element(std::begin(bins), std::end(bins));
-		if (verboseIncludes(LOG_END_SIM) && exp==0) { //consider logging only in the first experiment
-			printAllBinsToLog ();
-		}
+	}
+	if (verboseIncludes(LOG_END_SIM)) { //consider logging only the last experiment
+		printAllBinsToLog ();
+		logFile << "At the end of simulation:" << endl;
+		logFile << "maxLd=";
+		printVecToLog (maxLd);
 	}
 	if (verboseIncludes(RES)) {
 		double avg 	 = mean (maxLd);
@@ -223,9 +226,9 @@ Generate a BallsNBins simulator and run it in several configurations.
 *************************************************************************************************************************************************/
 int main() {
 	vector <Verbose_t> verbose 	= {RES};
-	unsigned numExps			= 5;
-	unsigned numBalls 			= 10000;
-	unsigned numBins[2] 		= {16, 32};
+	const unsigned numExps		= 100;
+	const unsigned numBalls 	= 10000;
+	const unsigned numBins[3] 	= {numBalls}; //{16, 32, numBalls};
 
 	for (unsigned idx(0); idx<sizeof(numBins)/sizeof(unsigned); idx++) {
 		for (unsigned numSmpls(0); numSmpls<3; numSmpls++) {
@@ -241,6 +244,7 @@ int main() {
 				false //allowRepetitions
 			);
 		}
+
 		// Additional single run with 2 smpls, allowing repetitions.
 		BallsNBins bb = BallsNBins (
 			numBalls,
