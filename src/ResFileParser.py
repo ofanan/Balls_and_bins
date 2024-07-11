@@ -142,7 +142,12 @@ class ResFileParser (object):
         plt.xlabel ('# of Bins Sampled')
         plt.ylabel ('Normalized load')
         plt.xticks([bar for bar in range(len(maxLd))], ['1', '2', '2 with repet.', 'All bins'])        
-        plt.title ('{:.0f}K balls, {} bins' .format(numBalls/1000, numBins))
+        if numBins>1000:
+            plt.title ('{:.0f}K balls, {:.0f} bins' .format(numBalls/1000, numBins/1000))
+        else:
+            plt.title ('{:.0f}K balls, {} bins' .format(numBalls/1000, numBins))
+        if numBins in [16, 32]:
+            plt.ylim ([0, 1.2])
         plt.savefig (f'../res/bb_{numBins}bins.pdf', bbox_inches='tight', dpi=100)
 
 if __name__ == '__main__':
