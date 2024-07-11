@@ -45,8 +45,10 @@ void BallsNBins::openOutputFiles ()
 		}
 		else {
 			resFile.open(resFileName);
-			resFile << "// format: ballsX_binsY_dZ : W" << endl << "// Where : " << endl;
-			resFile << "// X, Y, Z are the numbers of balls, bins, samples, resp. W is the maximal load." << endl;
+			resFile << "// format: ballsX_binsY_dZ : avg=A | std_over_avg=S" << endl << "// Where : " << endl;
+			resFile << "// X, Y, Z are the numbers of balls, bins, samples, resp." << endl;
+			resFile << "// A is the maximal load, averaged over the experiments done. "<< endl;
+			resFile << "// S is the ratio: standard variation of the experiments, over the maximal load." << endl;
 		}
 	}
 }
@@ -132,15 +134,15 @@ void BallsNBins::sim (
 			bins[chosenBin]++;
 			if (verboseIncludes(DEBUG)) {
 				if (bins[chosenBin]>=MAX_BIN_VAL) {
-					printErrStrAndExit ("In BallsNBins.sim(). bin #" + to_string(chosenBin) + "reached its maximal value. Please use a larger bit width for Bin_t in BallsNBins.h");
+					printErrStrAndExit ("In BallsNBins.sim(). bin" + to_string(chosenBin) + " reached its maximal value. Please use a larger bit width for Bin_t in BallsNBins.h");
 				}
 			}
-			if (verboseIncludes(LOG)) { //consider logging only in the first experiment
+			if (verboseIncludes(LOG) && exp==0) { //consider logging only in the first experiment
 				printAllBinsToLog ();
 			}
 		} // end of this experiment
 		maxLd[exp] = *std::max_element(std::begin(bins), std::end(bins));
-		if (verboseIncludes(LOG_END_SIM)) { //consider logging only in the first experiment
+		if (verboseIncludes(LOG_END_SIM) && exp==0) { //consider logging only in the first experiment
 			printAllBinsToLog ();
 		}
 	}
@@ -148,7 +150,7 @@ void BallsNBins::sim (
 		double average = accumulate(maxLd.begin(), maxLd.end(), 0.0) / maxLd.size();
 		double stddev = std::sqrt(std::accumulate(maxLd.begin(), maxLd.end(), 0.0,
 					   [average](double sum, int val) { return sum + std::pow(val - average, 2); }) / maxLd.size());
-		resFile << genSettingStr() << " | avg=" << average << "(std/avg)=" << stddev/average << endl;
+		resFile << genSettingStr() << " | avg=" << average << " | std_over_avg=" << stddev/average << endl;
 	}
 	cout << "Successfully finished sim." << endl;
 
@@ -167,7 +169,7 @@ inline bool BallsNBins::verboseIncludes (Verbose_t verbose)
 Generate a BallsNBins simulator and run it in several configurations.
 *************************************************************************************************************************************************/
 int main() {
-	vector <Verbose_t> verbose = {LOG, RES};
+	vector <Verbose_t> verbose = {RES, DEBUG};
 	BallsNBins bb = BallsNBins (
 		20, 	// numBalls
 		2, 	// numBins

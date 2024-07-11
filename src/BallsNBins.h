@@ -14,7 +14,7 @@ using namespace std;
 
 #include "settings.h"
 
-typedef int Bin_t; //Choose appropriate bin type to reduce run time
+typedef uint16_t Bin_t; //Choose appropriate bin type to reduce run time
 const long MAX_BIN_VAL = ((Bin_t)-1); // max representatable value for Bin_t.
 
 const int num_of_exps = 1;
