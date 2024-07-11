@@ -19,7 +19,7 @@ const long MAX_BIN_VAL = ((Bin_t)-1); // max representatable value for Bin_t.
 
 const int num_of_exps = 1;
 
-template<typename Type> float average (vector <Type> const &v);
+template<typename Type> double average (vector <Type> const &v);
 
 class BallsNBins {
 	unsigned long 		numBalls; // overall # of balls
@@ -37,6 +37,7 @@ class BallsNBins {
 	void openOutputFiles ();
 	string genSettingStr (); // Return a string that details the simulation's parameters.
 	bool verboseIncludes (Verbose_t const verbose); // Returns true iff the given verbose is found in the list of verbose to perform (this.verbose).
+	template<typename Type> void printVecToLog (vector <Type> const &v);
 
 	public:
 	BallsNBins  (

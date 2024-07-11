@@ -7,27 +7,43 @@
 #include "BallsNBins.h"
 
 /*************************************************************************************************************************************************
+Print a vector to a log file
+*************************************************************************************************************************************************/
+template<typename Type> void printVec (vector <Type> const &v)
+{
+	cout << "[";
+	for (const auto item : v) {
+		cout << item << " ";
+	}
+	cout << "]" << endl;
+}
+
+/*************************************************************************************************************************************************
 * Returns the average of the given vector. If the vector is empty, the average is 0.
 **************************************************************************************************************************************************/
-template<typename Type> float mean (vector <Type> const &v)
+template<typename Type> double mean (vector <Type> const &v)
 {
     if(v.empty()){
         return 0;
     }
-    auto const count = static_cast<float>(v.size());
+    auto const count = static_cast<double>(v.size());
     return std::reduce(v.begin(), v.end()) / count;
 }
 
 /*************************************************************************************************************************************************
 * Returns the standard deviation of the given vector. If the vector is empty, the average is 0.
 **************************************************************************************************************************************************/
-template<typename Type> float standardVariation (vector <Type> const &v, float const &mean)
+template<typename Type> double standardDeviation (vector <Type> const &v, double const &mean)
 {
     if(v.empty()){
         return 0;
     }
-    return std::sqrt(std::reduce(v.begin(), v.end(), 0.0,
-    			   [mean](double sum, auto val) { return sum + std::pow(val - mean, 2); }) / v.size());
+    double accum = 0.0;
+    std::for_each (std::begin(v), std::end(v), [&](const auto d) {
+        accum += (d - mean) * (d - mean);
+    });
+
+    return sqrt(accum / (v.size()-1));
 }
 
 BallsNBins::BallsNBins (unsigned long numBalls, unsigned numBins, vector <Verbose_t> const &verbose)
@@ -82,9 +98,18 @@ Print all the bins to a log file
 *************************************************************************************************************************************************/
 void BallsNBins::printAllBinsToLog ()
 {
-	logFile << "ball " << ball << ", chosenBin=" << chosenBin << ": bins=[";
-	for (const auto bin : bins) {
-		logFile << bin << " ";
+	logFile << "ball " << ball << ", chosenBin=" << chosenBin << ": bins=";
+	printVecToLog (bins);
+}
+
+/*************************************************************************************************************************************************
+Print a vector to a log file
+*************************************************************************************************************************************************/
+template<typename Type> void BallsNBins::printVecToLog (vector <Type> const &v)
+{
+	logFile << "[";
+	for (const auto item : v) {
+		logFile << item << " ";
 	}
 	logFile << "]" << endl;
 }
@@ -125,7 +150,7 @@ void BallsNBins::sim (
 		printErrStrAndExit ("BallsNBins.sim() was called with numSmpls=" + to_string(numSmpls) + "numSmpls should be either 0, 1, or 2.");
 	}
 	vector <Bin_t> maxLd; // maxLd[exp] will hold the maximal load observed at experiment exp.
-	vector<Bin_t> tmp(numBins);
+	vector<Bin_t> tmp(numExps);
 	maxLd= tmp;
 	std::random_device rd;
 	std::mt19937 rng(rd());
@@ -178,7 +203,7 @@ void BallsNBins::sim (
 	}
 	if (verboseIncludes(RES)) {
 		double avg 	 = mean (maxLd);
-		double stdev = standardVariation (maxLd, avg);
+		double stdev = standardDeviation (maxLd, avg);
 		resFile << genSettingStr() << " | avg=" << avg << " | std_over_avg=" << stdev/avg << endl;
 	}
 	cout << "Successfully finished sim." << endl;
@@ -203,19 +228,19 @@ int main() {
 	unsigned numBins[2] 		= {16, 32};
 
 	for (unsigned idx(0); idx<sizeof(numBins)/sizeof(unsigned); idx++) {
-//		for (unsigned numSmpls(0); numSmpls<3; numSmpls++) {
-//			BallsNBins bb = BallsNBins (
-//				numBalls,
-//				numBins[idx],
-//				verbose
-//			);
-//
-//			bb.sim (
-//				numExps,
-//				numSmpls,
-//				false //allowRepetitions
-//			);
-//		}
+		for (unsigned numSmpls(0); numSmpls<3; numSmpls++) {
+			BallsNBins bb = BallsNBins (
+				numBalls,
+				numBins[idx],
+				verbose
+			);
+
+			bb.sim (
+				numExps,
+				numSmpls,
+				false //allowRepetitions
+			);
+		}
 		// Additional single run with 2 smpls, allowing repetitions.
 		BallsNBins bb = BallsNBins (
 			numBalls,
