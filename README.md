@@ -1,6 +1,6 @@
 ## Balls and Bins
 
-This project provides tools to simulate and analysis of several balls-and-bins algorithms. 
+This project provides tools to simulate and analyze several balls-and-bins algorithms. 
 The model considers uniform, one-dimensional balls and bins. The balls arrive one at a time. Each ball picks a bin independently.
 The algorithms consider vary the number of sampled bins. Specifically the number of sampled bins may be either 1 (picking a bin u.a.r.), 2 (using the power of 2 choices), or $n$ (selecting the bin with the minimal current load). 
 
