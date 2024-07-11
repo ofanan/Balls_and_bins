@@ -8,7 +8,6 @@ ballsIdx    = 0
 binsIdx     = 1
 smplsIdx    = 2
 repetIdx    = 3
-
 SKY_BLUE    = '#56B4E9'
 
 def printTheoreticMaxLd ():
@@ -22,7 +21,7 @@ def printTheoreticMaxLd ():
 # convenient proportions for bar plots
 BAR_WIDTH               = 0.25
 BAR_WIDTH_BETWEEN_GRPS  = 0.25
-FONT_SIZE               = 20
+FONT_SIZE               = 13
 FONT_SIZE_SMALL         = 5
 LEGEND_FONT_SIZE        = FONT_SIZE
 LEGEND_FONT_SIZE_SMALL  = 5 
@@ -30,7 +29,7 @@ USE_FRAME               = False # When True, plot a "frame" (box) around the plo
 
 class ResFileParser (object):  
     
-    set_plt_params = lambda self, size='large' : matplotlib.rcParams.update({'font.size': FONT_SIZE, 
+    setPltParams = lambda self, size='large' : matplotlib.rcParams.update({'font.size': FONT_SIZE, 
                                                                              'legend.fontsize': LEGEND_FONT_SIZE,
                                                                              'xtick.labelsize':FONT_SIZE,
                                                                              'ytick.labelsize':FONT_SIZE,
@@ -114,7 +113,7 @@ class ResFileParser (object):
             numOfBars   = 4
         ):
         
-        self.set_plt_params ()
+        self.setPltParams ()
         lowerBnd    = numBalls/numBins
         points      = [point for point in self.listOfDicts if point['numBalls']==numBalls and point['numBins']==numBins]
         fig         = plt.figure () #(figsize =(10, 7))
@@ -150,7 +149,8 @@ if __name__ == '__main__':
     try:
         rfp = ResFileParser()
         rfp.parseFiles (['bb.res'])
-        rfp.genBars (numBins=16)
+        for numBins in [16, 32, 10000]:
+            rfp.genBars (numBins=numBins)
     except KeyboardInterrupt:
         print('Keyboard interrupt.')
 
