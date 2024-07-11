@@ -6,8 +6,31 @@
 #include "settings.h"
 #include "BallsNBins.h"
 
+/*************************************************************************************************************************************************
+* Returns the average of the given vector. If the vector is empty, the average is 0.
+**************************************************************************************************************************************************/
+template<typename Type> float mean (vector <Type> const &v)
+{
+    if(v.empty()){
+        return 0;
+    }
+    auto const count = static_cast<float>(v.size());
+    return std::reduce(v.begin(), v.end()) / count;
+}
 
-BallsNBins::BallsNBins (unsigned long numBalls, unsigned numBins, vector <Verbose_t>& verbose)
+/*************************************************************************************************************************************************
+* Returns the standard deviation of the given vector. If the vector is empty, the average is 0.
+**************************************************************************************************************************************************/
+template<typename Type> float standardVariation (vector <Type> const &v, float const &mean)
+{
+    if(v.empty()){
+        return 0;
+    }
+    return std::sqrt(std::reduce(v.begin(), v.end(), 0.0,
+    			   [mean](double sum, auto val) { return sum + std::pow(val - mean, 2); }) / v.size());
+}
+
+BallsNBins::BallsNBins (unsigned long numBalls, unsigned numBins, vector <Verbose_t> const &verbose)
 {
 	this->numBalls	= numBalls;
 	this->numBins	= numBins;
@@ -154,10 +177,9 @@ void BallsNBins::sim (
 		}
 	}
 	if (verboseIncludes(RES)) {
-		double average = accumulate(maxLd.begin(), maxLd.end(), 0.0) / maxLd.size();
-		double stddev = std::sqrt(std::accumulate(maxLd.begin(), maxLd.end(), 0.0,
-					   [average](double sum, int val) { return sum + std::pow(val - average, 2); }) / maxLd.size());
-		resFile << genSettingStr() << " | avg=" << average << " | std_over_avg=" << stddev/average << endl;
+		double avg 	 = mean (maxLd);
+		double stdev = standardVariation (maxLd, avg);
+		resFile << genSettingStr() << " | avg=" << avg << " | std_over_avg=" << stdev/avg << endl;
 	}
 	cout << "Successfully finished sim." << endl;
 
@@ -166,27 +188,44 @@ void BallsNBins::sim (
 /*************************************************************************************************************************************************
 Returns true iff the given verbose is found in the list of verbose to perform (this.verbose).
 *************************************************************************************************************************************************/
-inline bool BallsNBins::verboseIncludes (Verbose_t verbose)
+inline bool BallsNBins::verboseIncludes (Verbose_t const verbose)
 {
 	return (std::find((this->verbose).begin(), (this->verbose).end(), verbose) != (this->verbose).end());
 }
-
 
 /*************************************************************************************************************************************************
 Generate a BallsNBins simulator and run it in several configurations.
 *************************************************************************************************************************************************/
 int main() {
+	vector <Verbose_t> verbose 	= {RES};
+	unsigned numExps			= 5;
+	unsigned numBalls 			= 10000;
+	unsigned numBins[2] 		= {16, 32};
 
-	vector <Verbose_t> verbose = {RES};
-
-	BallsNBins bb = BallsNBins (
-		20, 	// numBalls
-		2, 	// numBins
-		verbose // verbose
-	);
-	bb.sim (
-		2, 	// numExps
-		1,	// numSmpls
-		false //allowRepetitions
-	);
+	for (unsigned idx(0); idx<sizeof(numBins)/sizeof(unsigned); idx++) {
+//		for (unsigned numSmpls(0); numSmpls<3; numSmpls++) {
+//			BallsNBins bb = BallsNBins (
+//				numBalls,
+//				numBins[idx],
+//				verbose
+//			);
+//
+//			bb.sim (
+//				numExps,
+//				numSmpls,
+//				false //allowRepetitions
+//			);
+//		}
+		// Additional single run with 2 smpls, allowing repetitions.
+		BallsNBins bb = BallsNBins (
+			numBalls,
+			numBins[idx],
+			verbose
+		);
+		bb.sim (
+			numExps,
+			2, // numSmpls
+			true //allowRepetitions
+		);
+	}
 }
