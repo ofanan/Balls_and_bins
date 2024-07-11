@@ -154,12 +154,18 @@ void BallsNBins::sim (
 
 }
 
+/*************************************************************************************************************************************************
+Returns true iff the given verbose is found in the list of verbose to perform (this.verbose).
+*************************************************************************************************************************************************/
 inline bool BallsNBins::verboseIncludes (Verbose_t verbose)
 {
 	return (std::find((this->verbose).begin(), (this->verbose).end(), verbose) != (this->verbose).end());
 }
 
 
+/*************************************************************************************************************************************************
+Generate a BallsNBins simulator and run it in several configurations.
+*************************************************************************************************************************************************/
 int main() {
 	vector <Verbose_t> verbose = {LOG, RES};
 	BallsNBins bb = BallsNBins (

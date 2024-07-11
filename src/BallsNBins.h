@@ -32,11 +32,9 @@ class BallsNBins {
 	vector <Verbose_t> 	verbose; // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
 	uint8_t				seed = 42;
 
-
 	void openOutputFiles ();
-	void func_in_me ();
-	string genSettingStr ();
-	bool verboseIncludes (Verbose_t verbose);
+	string genSettingStr (); // Return a string that details the simulation's parameters.
+	bool verboseIncludes (Verbose_t verbose); // Returns true iff the given verbose is found in the list of verbose to perform (this.verbose).
 
 	public:
 	BallsNBins  (

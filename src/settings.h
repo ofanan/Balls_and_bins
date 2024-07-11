@@ -24,8 +24,6 @@ const float CONF_LVL =0.95;
 
 # include "BallsNBins.h"
 
-bool fileExists (const std::string& name); // returns true iff the given fileName already exists
 void printErrStrAndExit (const string &errorMsgStr);
-//void printVecToLog (ofstream logFile, vector <Bin_t> vec); // Print a vector to a log file
 
 #endif
