@@ -45,8 +45,9 @@ void BallsNBins::openOutputFiles ()
 		}
 		else {
 			resFile.open(resFileName);
-			resFile << "// format: ballsX_binsY_dZ : avg=A | std_over_avg=S" << endl << "// Where : " << endl;
+			resFile << "// format: ballsX.binsY.dZ.RW : avg=A | std_over_avg=S" << endl << "// Where : " << endl;
 			resFile << "// X, Y, Z are the numbers of balls, bins, samples, resp." << endl;
+			resFile << "// W==1 if we allow repetitions, else W==0." << endl;
 			resFile << "// A is the maximal load, averaged over the experiments done. "<< endl;
 			resFile << "// S is the ratio: standard variation of the experiments, over the maximal load." << endl;
 		}
@@ -72,11 +73,17 @@ string BallsNBins::genSettingStr ()
 {
 	string settingStr =
 			string("balls") + to_string(numBalls) +
-			string("_bins") + to_string(numBins) +
-			string("_d") + to_string(numSmpls);
+			string(".bins") + to_string(numBins) +
+			string(".d") + to_string(numSmpls) +
+			string(".R");
+			;
 	if (allowRepetitions && numSmpls>1) {
-		settingStr += "_R";
+		settingStr += "1";
 	}
+	else {
+		settingStr += "0";
+	}
+
 	return settingStr;
 }
 
