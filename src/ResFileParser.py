@@ -47,8 +47,12 @@ class ResFileParser (object):
             print (f'Parsing error. settingStr={settingStr}')
             return False
         self.dict = {
-            'numBalls'      : int (splittedSettingStr   [ballsIdx].split("balls")[1]),   
-            'maxLd'   : maxLd
+            'numBalls'      : int (splittedSettingStr [ballsIdx].split("balls")[1]),   
+            'numBins'       : int (splittedSettingStr  [binsIdx].split("bins")[1]),   
+            'd'             : int (splittedSettingStr  [smplsIdx].split("d")[1]),   
+            'Repet'         : int (splittedSettingStr  [repetIdx].split("R")[1]),   
+            'maxLd'         : maxLd,
+            'stdOverAvg'    : stdOverAvg
             }
         return True
 
@@ -71,12 +75,15 @@ class ResFileParser (object):
                 # Discard lines with comments / verbose data
                 if (line.split ("//")[0] == ""):
                     continue
+
+                if not (self.parseLine(line)):
+                    error (f'problematic file is {input_file_name}')
                
                 if (not(self.dict in self.listOfDicts)):
                     self.listOfDicts.append(self.dict)
                         
             self.inputFile.close
-
+        print (self.listOfDicts)
 
 if __name__ == '__main__':
     try:

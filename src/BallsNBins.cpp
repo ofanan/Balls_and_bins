@@ -176,7 +176,9 @@ inline bool BallsNBins::verboseIncludes (Verbose_t verbose)
 Generate a BallsNBins simulator and run it in several configurations.
 *************************************************************************************************************************************************/
 int main() {
-	vector <Verbose_t> verbose = {RES, DEBUG};
+
+	vector <Verbose_t> verbose = {RES};
+
 	BallsNBins bb = BallsNBins (
 		20, 	// numBalls
 		2, 	// numBins
