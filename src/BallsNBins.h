@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <random>
 #include <numeric>
+#include <filesystem>
 #include <iterator>  // std::begin, std::end
 using namespace std;
 
@@ -33,10 +34,10 @@ class BallsNBins {
 
 
 	void openOutputFiles ();
-
 	void func_in_me ();
-
 	string genSettingStr ();
+	bool verboseIncludes (Verbose_t verbose);
+
 	public:
 	BallsNBins  (
 		unsigned long 		numBalls,
