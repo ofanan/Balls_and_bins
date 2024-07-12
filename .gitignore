@@ -1,4 +1,3 @@
+.*project
 /Debug/*
-.cproject
-.project
 /.settings/*
