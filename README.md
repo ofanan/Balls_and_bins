@@ -1,4 +1,4 @@
-## Balls and Bins
+# Balls and Bins
 
 This project provides tools to simulate and analyze several balls-and-bins algorithms. 
 The model considers uniform, one-dimensional balls and bins. The balls arrive one at a time. Each ball picks a bin independently.

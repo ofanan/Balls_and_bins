@@ -20,16 +20,3 @@ balls10000.bins10000.d0.R0 | avg=1 | std_over_avg=0
 balls10000.bins10000.d1.R0 | avg=6.76 | std_over_avg=0.101098
 balls10000.bins10000.d2.R0 | avg=3.02 | std_over_avg=0.0465912
 balls10000.bins10000.d2.R1 | avg=3.07 | std_over_avg=0.0835285
-
-balls10000.bins16.d0.R0 | avg=625 | std_over_avg=0
-balls10000.bins16.d1.R0 | avg=667.63 | std_over_avg=0.016384
-balls10000.bins16.d2.R0 | avg=626.2 | std_over_avg=0.000641992
-balls10000.bins16.d2.R1 | avg=626.34 | std_over_avg=0.000760123
-balls10000.bins32.d0.R0 | avg=313 | std_over_avg=0
-balls10000.bins32.d1.R0 | avg=348.93 | std_over_avg=0.0235564
-balls10000.bins32.d2.R0 | avg=314.06 | std_over_avg=0.00118189
-balls10000.bins32.d2.R1 | avg=314.15 | std_over_avg=0.00122869
-balls10000.bins10000.d0.R0 | avg=1 | std_over_avg=0
-balls10000.bins10000.d1.R0 | avg=6.65 | std_over_avg=0.0964772
-balls10000.bins10000.d2.R0 | avg=3.05 | std_over_avg=0.0718173
-balls10000.bins10000.d2.R1 | avg=3.08 | std_over_avg=0.0885259
