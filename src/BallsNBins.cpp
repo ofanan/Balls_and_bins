@@ -210,7 +210,7 @@ int main() {
 	vector <Verbose_t> verbose 	= {RES};
 	const unsigned numExps		= 100;
 	const unsigned numBalls 	= 10000;
-	const unsigned numBins[3] 	= {numBalls}; //{16, 32, numBalls};
+	const unsigned numBins[3] 	= {16, 32, numBalls};
 
 	for (unsigned idx(0); idx<sizeof(numBins)/sizeof(unsigned); idx++) {
 		for (unsigned numSmpls(0); numSmpls<3; numSmpls++) {
