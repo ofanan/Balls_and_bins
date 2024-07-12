@@ -207,8 +207,6 @@ void runShortSim ()
 Generate a BallsNBins simulator and run it in several configurations.
 *************************************************************************************************************************************************/
 int main() {
-	runShortSim (); //##$$$$
-	exit (0); //##$$$$
 	vector <Verbose_t> verbose 	= {RES};
 	const unsigned numExps		= 100;
 	const unsigned numBalls 	= 10000;
