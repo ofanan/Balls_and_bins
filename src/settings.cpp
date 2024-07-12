@@ -14,3 +14,4 @@ void printErrStrAndExit (const string &errorMsgStr)
 	cerr << errorMsg;
 	exit (0);
 }
+

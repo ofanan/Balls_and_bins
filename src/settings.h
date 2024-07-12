@@ -1,7 +1,7 @@
 //============================================================================
 // Author      : Itamar Cohen
-// Description : Header, containing declaration of types and accessory functions
-//				 used throughout this project.
+// Description : Header, containing declaration of types and accessory
+//				 generic functions, used throughout this project.
 //============================================================================
 #ifndef SETTINGS_H
 #define SETTINGS_H
@@ -24,5 +24,70 @@ const float CONF_LVL =0.95;
 
 # include "BallsNBins.h"
 
+/*************************************************************************************************************************************************
+Print a vector to Cout
+*************************************************************************************************************************************************/
+template<typename Type> void printVec (vector <Type> const &v)
+{
+	cout << "[";
+	for (const auto item : v) {
+		cout << item << " ";
+	}
+	cout << "]" << endl;
+}
+
+/*************************************************************************************************************************************************
+Format-print a given vector to the requested output file
+*************************************************************************************************************************************************/
+template<typename Type> void printVecToFile (ofstream &file, vector <Type> const &v)
+{
+	file << "[";
+	for (const auto item : v) {
+		file << item << " ";
+	}
+	file << "]" << endl;
+}
+
+/*************************************************************************************************************************************************
+Format-print a given vector to cout
+*************************************************************************************************************************************************/
+template<typename Type> void printVecToScreen (vector <Type> const &v)
+{
+	cout << "[";
+	for (const auto item : v) {
+		cout << item << " ";
+	}
+	cout << "]" << endl;
+}
+
+/*************************************************************************************************************************************************
+* Returns the average of the given vector. If the vector is empty, the average is 0.
+**************************************************************************************************************************************************/
+template<typename Type> double mean (vector <Type> const &v)
+{
+    if(v.empty()){
+        return 0;
+    }
+    double sum = std::reduce(std::begin(v), std::end(v), 0.0);
+    return  sum / v.size();
+}
+
+/*************************************************************************************************************************************************
+* Returns the standard deviation of the given vector. If the vector is empty, the average is 0.
+**************************************************************************************************************************************************/
+template<typename Type> double standardDeviation (vector <Type> const &v, double const &mean)
+{
+    if(v.empty()){
+        return 0;
+    }
+    double accum = 0.0;
+    std::for_each (std::begin(v), std::end(v), [&](const auto d) {
+        accum += (d - mean) * (d - mean);
+    });
+
+    return sqrt(accum / (v.size()-1));
+}
+
 void printErrStrAndExit (const string &errorMsgStr);
+
 #endif

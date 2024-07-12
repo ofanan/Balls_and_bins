@@ -1,5 +1,5 @@
 import os, numpy as np
-import pylab, matplotlib, seaborn, matplotlib.pyplot as plt
+import pylab, math, matplotlib, seaborn, matplotlib.pyplot as plt
 
 import settings
 from settings import warning, error, checkIfInputFileExists
@@ -21,7 +21,7 @@ def printTheoreticMaxLd ():
 # convenient proportions for bar plots
 BAR_WIDTH               = 0.25
 BAR_WIDTH_BETWEEN_GRPS  = 0.25
-FONT_SIZE               = 13
+FONT_SIZE               = 16
 FONT_SIZE_SMALL         = 5
 LEGEND_FONT_SIZE        = FONT_SIZE
 LEGEND_FONT_SIZE_SMALL  = 5 
@@ -117,10 +117,11 @@ class ResFileParser (object):
         self.setPltParams ()
         
         normalizationFactor = math.ceil(numBalls/numBins) if normalize else 1 
-        points      = [point for point in self.listOfDicts if point['numBalls']==numBalls and point['numBins']==numBins]
-        fig         = plt.figure () #(figsize =(10, 7))
-        X           = np.zeros (numOfBars)
-        maxLd       = np.zeros (numOfBars) 
+        points      = [point for point in self.listOfDicts if point['numBalls']==numBalls and point['numBins']==numBins] # consider only relevant points from the data 
+        fig         = plt.figure () 
+        maxLd       = np.zeros (numOfBars) # Will hold the values of the bars to plot. 
+        
+        # Extract the values of the points of sampling 1, 2, or all the bins, without repet, and assign them in the corresponding places in the list maxLd 
         for d in range(numOfBars-1):
             pointsWithThisD = [point for point in points if point['d']==d and point['repet']==0]
             if len(pointsWithThisD)==0:
@@ -133,23 +134,26 @@ class ResFileParser (object):
             else:
                 maxLd[d-1] = point['maxLd']/normalizationFactor
 
+        # Now, add the last point, that represents sampling 2 bins, with repetitions allowed.
         pointsWithThisD = [point for point in points if point['d']==2 and point['repet']==1]
         if len(pointsWithThisD)==0:
             warning (f'genBars did not find points with numBalls={numBalls}, numBalls={numBins}, d={d}')
         if len(pointsWithThisD)==2:
             warning (f'genBars found 2 points with numBalls={numBalls}, numBalls={numBins}, d={d}, repet=0. taking the first one')
-        point = pointsWithThisD[0]
+        point = pointsWithThisD[0]        
         maxLd[2] = point['maxLd']/normalizationFactor
         plt.bar([i for i in range(len(maxLd))], maxLd, color = ['black', 'blue', SKY_BLUE, 'green'])
         plt.xlabel ('# of Bins Sampled')
         plt.ylabel ('{}Load' .format ('Normalized ' if normalize else ''))
         plt.xticks([bar for bar in range(len(maxLd))], ['1', '2', '2 with repet.', 'All bins'])        
         if numBins>1000:
-            plt.title ('{:.0f}K balls, {:.0f} bins' .format(numBalls/1000, numBins/1000))
+            plt.title ('{:.0f}K balls, {:.0f}K bins' .format(numBalls/1000, numBins/1000))
         else:
             plt.title ('{:.0f}K balls, {} bins' .format(numBalls/1000, numBins))
         if normalize and numBins in [16, 32]:
             plt.ylim ([0, 1.2])
+        for spine in plt.gca().spines.values(): # remove the frame around the bars
+            spine.set_visible(False)        
         plt.savefig ('../res/bb_{}bins_{}.pdf' .format (numBins, 'rel' if normalize else 'abs'), bbox_inches='tight', dpi=100)
 
 if __name__ == '__main__':

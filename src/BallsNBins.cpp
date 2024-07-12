@@ -6,46 +6,6 @@
 #include "settings.h"
 #include "BallsNBins.h"
 
-/*************************************************************************************************************************************************
-Print a vector to a log file
-*************************************************************************************************************************************************/
-template<typename Type> void printVec (vector <Type> const &v)
-{
-	cout << "[";
-	for (const auto item : v) {
-		cout << item << " ";
-	}
-	cout << "]" << endl;
-}
-
-/*************************************************************************************************************************************************
-* Returns the average of the given vector. If the vector is empty, the average is 0.
-**************************************************************************************************************************************************/
-template<typename Type> double mean (vector <Type> const &v)
-{
-    if(v.empty()){
-        return 0;
-    }
-    double sum = std::reduce(std::begin(v), std::end(v), 0.0);
-    return  sum / v.size();
-}
-
-/*************************************************************************************************************************************************
-* Returns the standard deviation of the given vector. If the vector is empty, the average is 0.
-**************************************************************************************************************************************************/
-template<typename Type> double standardDeviation (vector <Type> const &v, double const &mean)
-{
-    if(v.empty()){
-        return 0;
-    }
-    double accum = 0.0;
-    std::for_each (std::begin(v), std::end(v), [&](const auto d) {
-        accum += (d - mean) * (d - mean);
-    });
-
-    return sqrt(accum / (v.size()-1));
-}
-
 BallsNBins::BallsNBins (unsigned long numBalls, unsigned numBins, vector <Verbose_t> const &verbose)
 {
 	this->numBalls	= numBalls;
@@ -99,20 +59,20 @@ Print all the bins to a log file
 void BallsNBins::printAllBinsToLog ()
 {
 	logFile << "ball " << ball << ", chosenBin=" << chosenBin << ": bins=";
-	printVecToLog (bins);
+	printVecToFile (logFile, bins);
 }
 
 /*************************************************************************************************************************************************
 Print a vector to a log file
 *************************************************************************************************************************************************/
-template<typename Type> void BallsNBins::printVecToLog (vector <Type> const &v)
-{
-	logFile << "[";
-	for (const auto item : v) {
-		logFile << item << " ";
-	}
-	logFile << "]" << endl;
-}
+//template<typename Type> void BallsNBins::printVecToLog (vector <Type> const &v)
+//{
+//	logFile << "[";
+//	for (const auto item : v) {
+//		logFile << item << " ";
+//	}
+//	logFile << "]" << endl;
+//}
 
 /*************************************************************************************************************************************************
 Return a string that details the simulation's parameters.
@@ -202,7 +162,7 @@ void BallsNBins::sim (
 		printAllBinsToLog ();
 		logFile << "At the end of simulation:" << endl;
 		logFile << "maxLd=";
-		printVecToLog (maxLd);
+		printVecToFile (logFile, maxLd);
 	}
 	if (verboseIncludes(RES)) {
 		double avg 	 = mean (maxLd);
@@ -221,10 +181,34 @@ inline bool BallsNBins::verboseIncludes (Verbose_t const verbose)
 	return (std::find((this->verbose).begin(), (this->verbose).end(), verbose) != (this->verbose).end());
 }
 
+
+/*************************************************************************************************************************************************
+Run a short sim. Used for debugging.
+*************************************************************************************************************************************************/
+void runShortSim ()
+{
+	vector <Bin_t> vec= {1, 2, 3, 4};
+	printVecToScreen (vec);
+	vector <Verbose_t> verbose 	= {RES, LOG};
+	BallsNBins bb = BallsNBins (
+		4 , // numBalls
+		2,  // numBins
+		verbose // verbose
+	);
+
+	bb.sim (
+		2, // numExps
+		1, // numSmpls
+		false //allowRepetitions
+	);
+}
+
 /*************************************************************************************************************************************************
 Generate a BallsNBins simulator and run it in several configurations.
 *************************************************************************************************************************************************/
 int main() {
+	runShortSim (); //##$$$$
+	exit (0); //##$$$$
 	vector <Verbose_t> verbose 	= {RES};
 	const unsigned numExps		= 100;
 	const unsigned numBalls 	= 10000;

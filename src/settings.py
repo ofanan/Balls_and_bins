@@ -15,10 +15,6 @@ STDOUT_ENDC     = '\033[0m'
 #     BOLD = '\033[1m'
 #     UNDERLINE = '\033[4m'
    
-# Calculate the confidence interval of an array of values ar, given its avg. Based on 
-# https://stackoverflow.com/questions/15033511/compute-a-confidence-interval-from-sample-data
-confInterval = lambda ar, avg, confLvl=0.95 : st.t.interval (confLvl, len(ar)-1, loc=avg, scale=st.sem(ar)) if np.std(ar)>0 else [avg, avg]
-   
 def warning (str2print):
     """
     Print an error msg and exit.

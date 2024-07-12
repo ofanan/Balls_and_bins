@@ -16,3 +16,14 @@ balls10000.bins10000.d0.R0 | avg=1 | std_over_avg=0
 balls10000.bins10000.d1.R0 | avg=6.68 | std_over_avg=0.0874193
 balls10000.bins10000.d2.R0 | avg=3.06 | std_over_avg=0.0780011
 balls10000.bins10000.d2.R1 | avg=3.1 | std_over_avg=0.0972617
+balls10000.bins10000.d0.R0 | avg=1 | std_over_avg=0
+balls10000.bins10000.d1.R0 | avg=6.76 | std_over_avg=0.101098
+balls10000.bins10000.d2.R0 | avg=3.02 | std_over_avg=0.0465912
+balls10000.bins10000.d2.R1 | avg=3.07 | std_over_avg=0.0835285
+balls4.bins2.d1.R0 | avg=3 | std_over_avg=0
+balls4.bins2.d1.R0 | avg=2 | std_over_avg=0
+balls4.bins2.d1.R0 | avg=3 | std_over_avg=0
+balls4.bins2.d1.R0 | avg=3 | std_over_avg=0
+balls4.bins2.d1.R0 | avg=4 | std_over_avg=0
+balls4.bins2.d1.R0 | avg=4 | std_over_avg=0
+balls4.bins2.d1.R0 | avg=3.5 | std_over_avg=0.202031
