@@ -110,11 +110,13 @@ class ResFileParser (object):
             self,
             numBalls    = 10000,
             numBins     = 16,
-            numOfBars   = 4
+            numOfBars   = 4,
+            normalize   = True, # when True, normalize the results w.r.t Opt.
         ):
         
         self.setPltParams ()
-        lowerBnd    = numBalls/numBins
+        
+        normalizationFactor = math.ceil(numBalls/numBins) if normalize else 1 
         points      = [point for point in self.listOfDicts if point['numBalls']==numBalls and point['numBins']==numBins]
         fig         = plt.figure () #(figsize =(10, 7))
         X           = np.zeros (numOfBars)
@@ -127,9 +129,9 @@ class ResFileParser (object):
                 error (f'genBars found 2 points with numBalls={numBalls}, numBalls={numBins}, d={d}, repet=0.')
             point = pointsWithThisD[0]
             if d==0:
-                maxLd[-1] = point['maxLd']/lowerBnd
+                maxLd[-1] = point['maxLd']/normalizationFactor
             else:
-                maxLd[d-1] = point['maxLd']/lowerBnd
+                maxLd[d-1] = point['maxLd']/normalizationFactor
 
         pointsWithThisD = [point for point in points if point['d']==2 and point['repet']==1]
         if len(pointsWithThisD)==0:
@@ -137,25 +139,27 @@ class ResFileParser (object):
         if len(pointsWithThisD)==2:
             warning (f'genBars found 2 points with numBalls={numBalls}, numBalls={numBins}, d={d}, repet=0. taking the first one')
         point = pointsWithThisD[0]
-        maxLd[2] = point['maxLd']/lowerBnd
+        maxLd[2] = point['maxLd']/normalizationFactor
         plt.bar([i for i in range(len(maxLd))], maxLd, color = ['black', 'blue', SKY_BLUE, 'green'])
         plt.xlabel ('# of Bins Sampled')
-        plt.ylabel ('Normalized load')
+        plt.ylabel ('{}Load' .format ('Normalized ' if normalize else ''))
         plt.xticks([bar for bar in range(len(maxLd))], ['1', '2', '2 with repet.', 'All bins'])        
         if numBins>1000:
             plt.title ('{:.0f}K balls, {:.0f} bins' .format(numBalls/1000, numBins/1000))
         else:
             plt.title ('{:.0f}K balls, {} bins' .format(numBalls/1000, numBins))
-        if numBins in [16, 32]:
+        if normalize and numBins in [16, 32]:
             plt.ylim ([0, 1.2])
-        plt.savefig (f'../res/bb_{numBins}bins.pdf', bbox_inches='tight', dpi=100)
+        plt.savefig ('../res/bb_{}bins_{}.pdf' .format (numBins, 'rel' if normalize else 'abs'), bbox_inches='tight', dpi=100)
 
 if __name__ == '__main__':
     try:
         rfp = ResFileParser()
         rfp.parseFiles (['bb.res'])
+        for numBins in [16, 32]:
+            rfp.genBars (numBins=numBins, normalize=False)
         for numBins in [16, 32, 10000]:
-            rfp.genBars (numBins=numBins)
+            rfp.genBars (numBins=numBins, normalize=True)
     except KeyboardInterrupt:
         print('Keyboard interrupt.')
 
