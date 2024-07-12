@@ -11,7 +11,7 @@ Mitzenmacher, Michael., [The power of two choices in randomized load balancing](
 
 The directories source files are described below. More detailed documentation is found within the source files.
 
-# Directories
+## Directories
 
 #### src
 Includes the C++ and Python source and header files.
@@ -22,7 +22,7 @@ The results of the simulations are written to this directory.
 #### log_files
 The log files are written to this directory.
 
-# Source files (in /src directory)
+## Source files (in /src directory)
 
 ##### BallsNBins.cpp, BallsNBins.h #
 The main source and header files, containing the balls-and-bins simulator and a main function that runs it.
