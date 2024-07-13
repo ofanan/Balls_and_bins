@@ -1,9 +1,9 @@
 # Balls and Bins
 
 This project provides tools to simulate and analyze several balls-and-bins algorithms. 
-The model considers uniform, one-dimensional balls and bins. The balls arrive one at a time. Each ball picks a bin independently.
-The simulation files are written in C++. The files that parse the results and generate plots are written in Python.
-The algorithms considered vary the number of sampled bins. Specifically the number of sampled bins may be either 1 (picking a bin u.a.r.), 2 (using the power of 2 choices), or $n$ (selecting the bin with the minimal current load). 
+The model considers uniform, one-dimensional balls and bins. The balls arrive one at a time. Each ball picks a bin independently from the other balls. The algorithms considered vary the number of sampled bins. Specifically the number of sampled bins may be either 1 (picking a bin u.a.r.), 2 (using the power of 2 choices), or $n$ (selecting the bin with the minimal current load). 
+
+The C++ simulation files output the results to .res files that may be later used to generate plots by Python scripts.
 
 For further details, please refer to the paper:
 
