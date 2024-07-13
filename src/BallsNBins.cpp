@@ -2,7 +2,6 @@
 // Author      : Itamar Cohen
 // Description : The main balls-and-bins simulation source file.
 //============================================================================
-//https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=2b5c5a64a4403f3f22ed7f7170e3a559e0687443
 #include "settings.h"
 #include "BallsNBins.h"
 
@@ -61,18 +60,6 @@ void BallsNBins::printAllBinsToLog ()
 	logFile << "ball " << ball << ", chosenBin=" << chosenBin << ": bins=";
 	printVecToFile (logFile, bins);
 }
-
-/*************************************************************************************************************************************************
-Print a vector to a log file
-*************************************************************************************************************************************************/
-//template<typename Type> void BallsNBins::printVecToLog (vector <Type> const &v)
-//{
-//	logFile << "[";
-//	for (const auto item : v) {
-//		logFile << item << " ";
-//	}
-//	logFile << "]" << endl;
-//}
 
 /*************************************************************************************************************************************************
 Return a string that details the simulation's parameters.

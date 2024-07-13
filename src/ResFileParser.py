@@ -10,13 +10,14 @@ smplsIdx    = 2
 repetIdx    = 3
 SKY_BLUE    = '#56B4E9'
 
-def printTheoreticMaxLd ():
+def printTheoreticMaxLd (
+        numBalls = 10**4    
+    ):
     """
     Print the theoretical maximal load when picking the bin either u.a.r., or using the power of two choices.  
-    """
-    numBalls = 10**6
+    0"""
     lgLg = np.log(np.log (numBalls))
-    print (f'u.a.r={np.log (numBalls)/lgLg}, P of 2={lgLg}')
+    print (f'u.a.r={np.log (numBalls)/lgLg}, P of 2={lgLg/math.log(2)}')
 
 # convenient proportions for bar plots
 BAR_WIDTH               = 0.25
@@ -158,6 +159,8 @@ class ResFileParser (object):
 
 if __name__ == '__main__':
     try:
+        printTheoreticMaxLd ()
+        exit ()
         rfp = ResFileParser()
         rfp.parseFiles (['bb.res'])
         for numBins in [16, 32]:

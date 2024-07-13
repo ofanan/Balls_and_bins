@@ -57,5 +57,4 @@ class BallsNBins {
 
 };
 
-
 #endif
