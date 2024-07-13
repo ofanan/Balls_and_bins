@@ -10,5 +10,5 @@ alias la="ls -a"
 alias g="grep"
 alias h=history
 alias commit='c; git add -A; git commit'
-alias compush='c; commit; pusher'
 source ../../.alias_pusher_Balls_and_bins.txt
+alias compush='c; commit; pusher'

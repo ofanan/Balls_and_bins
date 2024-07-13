@@ -11,7 +11,7 @@ repetIdx    = 3
 SKY_BLUE    = '#56B4E9'
 
 def printTheoreticMaxLd (
-        numBalls = 10**4    
+        numBalls = 10**6    
     ):
     """
     Print the theoretical maximal load when picking the bin either u.a.r., or using the power of two choices.  
