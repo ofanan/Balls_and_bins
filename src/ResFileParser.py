@@ -4,11 +4,24 @@ import pylab, math, matplotlib, seaborn, matplotlib.pyplot as plt
 import settings
 from settings import warning, error, checkIfInputFileExists
 
+# Indices of the fields and the settingStr.
 ballsIdx    = 0
 binsIdx     = 1
 smplsIdx    = 2
 repetIdx    = 3
+
+# Codes of lovely colors
 SKY_BLUE    = '#56B4E9'
+
+# convenient sizes and parameters for plots
+BAR_WIDTH               = 0.25
+BAR_WIDTH_BETWEEN_GRPS  = 0.25
+FONT_SIZE               = 16
+FONT_SIZE_SMALL         = 5
+LEGEND_FONT_SIZE        = FONT_SIZE
+LEGEND_FONT_SIZE_SMALL  = 5 
+USE_FRAME               = False # When True, plot a "frame" (box) around the plot 
+
 
 def printTheoreticMaxLd (
         numBalls = 10**6    
@@ -18,15 +31,6 @@ def printTheoreticMaxLd (
     0"""
     lgLg = np.log(np.log (numBalls))
     print (f'u.a.r={np.log (numBalls)/lgLg}, P of 2={lgLg/math.log(2)}')
-
-# convenient proportions for bar plots
-BAR_WIDTH               = 0.25
-BAR_WIDTH_BETWEEN_GRPS  = 0.25
-FONT_SIZE               = 16
-FONT_SIZE_SMALL         = 5
-LEGEND_FONT_SIZE        = FONT_SIZE
-LEGEND_FONT_SIZE_SMALL  = 5 
-USE_FRAME               = False # When True, plot a "frame" (box) around the plot 
 
 class ResFileParser (object):  
     
@@ -159,8 +163,6 @@ class ResFileParser (object):
 
 if __name__ == '__main__':
     try:
-        printTheoreticMaxLd ()
-        exit ()
         rfp = ResFileParser()
         rfp.parseFiles (['bb.res'])
         for numBins in [16, 32]:

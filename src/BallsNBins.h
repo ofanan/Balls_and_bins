@@ -17,10 +17,6 @@ using namespace std;
 typedef uint16_t Bin_t; //Choose appropriate bin type to reduce run time
 const long MAX_BIN_VAL = ((Bin_t)-1); // max representatable value for Bin_t.
 
-const int num_of_exps = 1;
-
-template<typename Type> double average (vector <Type> const &v);
-
 class BallsNBins {
 	unsigned long 		numBalls; // overall # of balls
 	unsigned long 		ball;	  // # of the current ball

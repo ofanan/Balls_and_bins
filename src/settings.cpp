@@ -11,7 +11,7 @@ void printErrStrAndExit (const string &errorMsgStr)
 {
 	char errorMsg[errorMsgStr.length() + 1];
 	strcpy(errorMsg, errorMsgStr.c_str());
-	cerr << errorMsg;
-	exit (0);
+	perror (errorMsg);
+	exit (1);
 }
 
