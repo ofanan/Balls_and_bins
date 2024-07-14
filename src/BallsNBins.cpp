@@ -86,9 +86,7 @@ void BallsNBins::sim (
 	if (_numSmpls>2) {
 		printErrStrAndExit ("BallsNBins.sim() was called with numSmpls=" + to_string(_numSmpls) + "numSmpls should be either 0, 1, or 2.");
 	}
-	vector <Bin_t> maxLd; // maxLd[exp] will hold the maximal load observed at experiment exp.
-	vector<Bin_t> tmp(numExps);
-	maxLd= tmp;
+	vector<Bin_t> maxLd(numExps, 0);
 	std::random_device rd;
 	std::mt19937 rng(rd());
 	std::mt19937 gen(rd());
