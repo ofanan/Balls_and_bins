@@ -5,14 +5,6 @@
 #include "settings.h"
 #include "BallsNBins.h"
 
-BallsNBins::BallsNBins (unsigned long numBalls, unsigned numBins, vector <Verbose_t> const &verbose)
-{
-	_numBalls	= numBalls;
-	_numBins	= numBins;
-	_verbose 	= verbose;  // verbose level, a defined in settings.h, e.gBallsNBins.: LOG, DEBUG.
-	_seed 			= 42;
-}
-
 BallsNBins::~BallsNBins ()
 {
 	_bins.clear ();

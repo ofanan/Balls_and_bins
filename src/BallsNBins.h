@@ -12,7 +12,6 @@
 #include <iterator>  // std::begin, std::end
 using namespace std;
 
-// #include "MyClass.h"
 #include "settings.h"
 
 typedef uint16_t Bin_t; //Choose appropriate bin type to reduce run time
@@ -41,7 +40,7 @@ class BallsNBins {
 		unsigned long 		numBalls,
 		unsigned  			numBins,
 		vector <Verbose_t> const &verbose // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
-	);
+	) :_numBalls(numBalls), _numBins(numBins), _bins(numBins) {_verbose = verbose;}
 	~BallsNBins ();
 
 	void printAllBinsToLog ();
