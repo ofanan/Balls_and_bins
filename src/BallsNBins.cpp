@@ -7,22 +7,20 @@
 
 BallsNBins::BallsNBins (unsigned long numBalls, unsigned numBins, vector <Verbose_t> const &verbose)
 {
-	this->numBalls	= numBalls;
-	this->numBins	= numBins;
-	this->verbose 	= verbose;  // verbose level, a defined in settings.h, e.gBallsNBins.: LOG, DEBUG.
-	seed 			= 42;
-	vector<Bin_t> tmp(numBins);
-	bins = tmp;
+	_numBalls	= numBalls;
+	_numBins	= numBins;
+	_verbose 	= verbose;  // verbose level, a defined in settings.h, e.gBallsNBins.: LOG, DEBUG.
+	_seed 			= 42;
 }
 
 BallsNBins::~BallsNBins ()
 {
-	bins.clear ();
+	_bins.clear ();
 	if (verboseIncludes(LOG)) {
-		logFile.close ();
+		_logFile.close ();
 	}
 	if (verboseIncludes(RES)) {
-		resFile.close ();
+		_resFile.close ();
 	}
 }
 
@@ -34,20 +32,20 @@ void BallsNBins::openOutputFiles ()
 {
 	if (verboseIncludes(LOG) || verboseIncludes(LOG_END_SIM)) {
 		string logFileName = "log_files/bb_" + genSettingStr() + ".log";
-		logFile.open(logFileName);
+		_logFile.open(logFileName);
 	}
 	if (verboseIncludes(RES)) {
 		string resFileName = "res/bb.res";
 		if (filesystem::exists(resFileName)) {
-			  resFile.open(resFileName, std::ios_base::app);
+			  _resFile.open(resFileName, std::ios_base::app);
 		}
 		else {
-			resFile.open(resFileName);
-			resFile << "// format: ballsX.binsY.dZ.RW : avg=A | std_over_avg=S" << endl << "// Where : " << endl;
-			resFile << "// X, Y, Z are the numbers of balls, bins, samples, resp." << endl;
-			resFile << "// W==1 if we allow repetitions, else W==0." << endl;
-			resFile << "// A is the maximal load, averaged over the experiments done. "<< endl;
-			resFile << "// S is the ratio: standard variation of the experiments, over the maximal load." << endl;
+			_resFile.open(resFileName);
+			_resFile << "// format: ballsX.binsY.dZ.RW : avg=A | std_over_avg=S" << endl << "// Where : " << endl;
+			_resFile << "// X, Y, Z are the numbers of balls, bins, samples, resp." << endl;
+			_resFile << "// W==1 if we allow repetitions, else W==0." << endl;
+			_resFile << "// A is the maximal load, averaged over the experiments done. "<< endl;
+			_resFile << "// S is the ratio: standard variation of the experiments, over the maximal load." << endl;
 		}
 	}
 }
@@ -57,8 +55,8 @@ Print all the bins to a log file
 *************************************************************************************************************************************************/
 void BallsNBins::printAllBinsToLog ()
 {
-	logFile << "ball " << ball << ", chosenBin=" << chosenBin << ": bins=";
-	printVecToFile (logFile, bins);
+	_logFile << "ball " << _ball << ", _chosenBin=" << _chosenBin << ": bins=";
+	printVecToFile (_logFile, _bins);
 }
 
 /*************************************************************************************************************************************************
@@ -67,12 +65,12 @@ Return a string that details the simulation's parameters.
 string BallsNBins::genSettingStr ()
 {
 	string settingStr =
-			string("balls") + to_string(numBalls) +
-			string(".bins") + to_string(numBins) +
-			string(".d") + to_string(numSmpls) +
+			string("balls") + to_string(_numBalls) +
+			string(".bins") + to_string(_numBins) +
+			string(".d") + to_string(_numSmpls) +
 			string(".R");
 			;
-	if (allowRepetitions && numSmpls>1) {
+	if (_allowRepetitions && _numSmpls>1) {
 		settingStr += "1";
 	}
 	else {
@@ -88,13 +86,13 @@ Simulate balls and bins
 void BallsNBins::sim (
 		unsigned numExps,
 		unsigned numSmpls, //number of samples. When 0 (sample all bins). Otherwise, sample numSmpl bins and use the minimal.
-		bool 	 allowRepetitions // when True, we occasionally may sample the same bin a few time at a single round
+		bool 	 _allowRepetitions // when True, we occasionally may sample the same bin a few time at a single round
 		)
 {
-	this->numSmpls	= numSmpls; //number of samples. When 0 (sample all bins). Otherwise, sample numSmpl bins and use the minimal.
-	this->allowRepetitions = allowRepetitions;
-	if (numSmpls>2) {
-		printErrStrAndExit ("BallsNBins.sim() was called with numSmpls=" + to_string(numSmpls) + "numSmpls should be either 0, 1, or 2.");
+	_numSmpls	= numSmpls; //number of samples. When 0 (sample all bins). Otherwise, sample numSmpl bins and use the minimal.
+	this->_allowRepetitions = _allowRepetitions;
+	if (_numSmpls>2) {
+		printErrStrAndExit ("BallsNBins.sim() was called with numSmpls=" + to_string(_numSmpls) + "numSmpls should be either 0, 1, or 2.");
 	}
 	vector <Bin_t> maxLd; // maxLd[exp] will hold the maximal load observed at experiment exp.
 	vector<Bin_t> tmp(numExps);
@@ -102,59 +100,59 @@ void BallsNBins::sim (
 	std::random_device rd;
 	std::mt19937 rng(rd());
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dis(0, numBins - 1);
+	std::uniform_int_distribution<> dis(0,  - 1);
 	openOutputFiles ();
-	cout << "Starting sim. NumExps=" << numExps << ", numBalls=" << numBalls << ", numBins=" << numBins << ", numSmpls=" << numSmpls << endl;
+	cout << "Starting sim. NumExps=" << numExps << ", numBalls=" << _numBalls << ", numBins=" << _numBins << ", numSmpls=" << _numSmpls << endl;
 
 	for (unsigned exp(0); exp<numExps; exp++) {
-		srand(seed + exp); // set the seed of random num generation
-		fill(bins.begin(), bins.end(), 0); // empty all the bins
-		for (ball = 0; ball<numBalls; ball++) {
+		srand(_seed + exp); // set the seed of random num generation
+		fill(_bins.begin(), _bins.end(), 0); // empty all the bins
+		for (_ball = 0; _ball<_numBalls; _ball++) {
 
-			switch (numSmpls) {
+			switch (_numSmpls) {
 
 				case 0:
-					chosenBin = distance (bins.begin(), min_element(bins.begin(), bins.end()));
+					_chosenBin = distance (_bins.begin(), min_element(_bins.begin(), _bins.end()));
 					break;
 				case 1:
-					chosenBin = dis(gen);
+					_chosenBin = dis(gen);
 					break;
 				default:
-					chosenBin = dis(gen);
+					_chosenBin = dis(gen);
 					unsigned scndBin;
 					while (true) {
 						scndBin = dis(gen);
-						if (allowRepetitions || scndBin!=chosenBin) { // Assure that we don't sample the same bin again
-							if (bins[scndBin]<bins[chosenBin]) {
-								chosenBin =scndBin;
+						if (_allowRepetitions || scndBin!=_chosenBin) { // Assure that we don't sample the same bin again
+							if (_bins[scndBin]<_bins[_chosenBin]) {
+								_chosenBin =scndBin;
 							}
 							break;
 						}
 					}
 					break;
 			}
-			bins[chosenBin]++;
+			_bins[_chosenBin]++;
 			if (verboseIncludes(DEBUG)) {
-				if (bins[chosenBin]>=MAX_BIN_VAL) {
-					printErrStrAndExit ("In BallsNBins.sim(). bin" + to_string(chosenBin) + " reached its maximal value. Please use a larger bit width for Bin_t in BallsNBins.h");
+				if (_bins[_chosenBin]>=MAX_BIN_VAL) {
+					printErrStrAndExit ("In BallsNBins.sim(). bin" + to_string(_chosenBin) + " reached its maximal value. Please use a larger bit width for Bin_t in BallsNBins.h");
 				}
 			}
 			if (verboseIncludes(LOG) && exp==0) { //consider logging only in the first experiment
 				printAllBinsToLog ();
 			}
 		} // end of this experiment
-		maxLd[exp] = *std::max_element(std::begin(bins), std::end(bins));
+		maxLd[exp] = *std::max_element(std::begin(_bins), std::end(_bins));
 	}
 	if (verboseIncludes(LOG_END_SIM)) { //consider logging only the last experiment
 		printAllBinsToLog ();
-		logFile << "At the end of simulation:" << endl;
-		logFile << "maxLd=";
-		printVecToFile (logFile, maxLd);
+		_logFile << "At the end of simulation:" << endl;
+		_logFile << "maxLd=";
+		printVecToFile (_logFile, maxLd);
 	}
 	if (verboseIncludes(RES)) {
 		double avg 	 = mean (maxLd);
 		double stdev = standardDeviation (maxLd, avg);
-		resFile << genSettingStr() << " | avg=" << avg << " | std_over_avg=" << stdev/avg << endl;
+		_resFile << genSettingStr() << " | avg=" << avg << " | std_over_avg=" << stdev/avg << endl;
 	}
 	cout << "Successfully finished sim." << endl;
 
@@ -165,7 +163,7 @@ Returns true iff the given verbose is found in the list of verbose to perform (t
 *************************************************************************************************************************************************/
 inline bool BallsNBins::verboseIncludes (Verbose_t const verbose)
 {
-	return (std::find((this->verbose).begin(), (this->verbose).end(), verbose) != (this->verbose).end());
+	return (std::find((_verbose).begin(), (_verbose).end(), verbose) != (_verbose).end());
 }
 
 
@@ -183,10 +181,11 @@ void runShortSim ()
 		verbose // verbose
 	);
 
+	exit (0);
 	bb.sim (
 		2, // numExps
 		1, // numSmpls
-		false //allowRepetitions
+		false //_allowRepetitions
 	);
 }
 
@@ -194,11 +193,11 @@ void runShortSim ()
 Generate a BallsNBins simulator and run it in several configurations.
 *************************************************************************************************************************************************/
 int main() {
+	runShortSim ();
 	vector <Verbose_t> verbose 	= {RES};
 	const unsigned numExps		= 100;
 	const unsigned numBalls 	= 10000;
 	const unsigned numBins[3] 	= {16, 32, numBalls};
-
 	for (unsigned idx(0); idx<sizeof(numBins)/sizeof(unsigned); idx++) {
 		for (unsigned numSmpls(0); numSmpls<3; numSmpls++) {
 			BallsNBins bb = BallsNBins (
@@ -210,7 +209,7 @@ int main() {
 			bb.sim (
 				numExps,
 				numSmpls,
-				false //allowRepetitions
+				false //_allowRepetitions
 			);
 		}
 
@@ -223,7 +222,7 @@ int main() {
 		bb.sim (
 			numExps,
 			2, // numSmpls
-			true //allowRepetitions
+			true //_allowRepetitions
 		);
 	}
 }

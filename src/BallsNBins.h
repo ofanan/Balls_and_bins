@@ -1,7 +1,7 @@
 #ifndef BALLS_AND_BINS_H
 #define BALLS_AND_BINS_H
 
-# include <stdio.h>
+#include <stdio.h>
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -12,23 +12,24 @@
 #include <iterator>  // std::begin, std::end
 using namespace std;
 
+// #include "MyClass.h"
 #include "settings.h"
 
 typedef uint16_t Bin_t; //Choose appropriate bin type to reduce run time
 const long MAX_BIN_VAL = ((Bin_t)-1); // max representatable value for Bin_t.
 
 class BallsNBins {
-	unsigned long 		numBalls; // overall # of balls
-	unsigned long 		ball;	  // # of the current ball
-	unsigned  			numBins;
-	unsigned			chosenBin;
-	unsigned  			numSmpls;
-	bool 				allowRepetitions; // when True, we occasionally may sample the same bin a few time at a single round
-	vector <Bin_t> 		bins;
-	ofstream 			logFile;
-	ofstream 			resFile;
-	vector <Verbose_t> 	verbose; // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
-	uint8_t				seed = 42;
+	unsigned long 		_numBalls; // overall # of balls
+	unsigned long 		_ball;	  // # of the current ball
+	unsigned  			_numBins;
+	unsigned			_chosenBin;
+	unsigned  			_numSmpls;
+	bool 				_allowRepetitions; // when True, we occasionally may sample the same bin a few time at a single round
+	vector <Bin_t> 		_bins;
+	ofstream 			_logFile;
+	ofstream 			_resFile;
+	vector <Verbose_t> 	_verbose; // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
+	uint8_t				_seed = 42;
 
 	void openOutputFiles ();
 	string genSettingStr (); // Return a string that details the simulation's parameters.
