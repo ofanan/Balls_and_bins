@@ -39,8 +39,8 @@ class BallsNBins {
 	BallsNBins  (
 		unsigned long 		numBalls,
 		unsigned  			numBins,
-		vector <Verbose_t> const &verbose // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
-	) :_numBalls(numBalls), _numBins(numBins), _bins(numBins) {_verbose = verbose;}
+		vector <Verbose_t> const verbose // verbose level, a defined in settings.h, e.g.: LOG, DEBUG.
+	) :_numBalls(numBalls), _numBins(numBins), _bins(numBins), _verbose (verbose) {}
 	~BallsNBins ();
 
 	void printAllBinsToLog ();

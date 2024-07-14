@@ -14,7 +14,7 @@
 #include <fstream>
 #include <stdint.h>
 
-typedef int8_t Verbose_t;
+typedef int16_t Verbose_t;
 const Verbose_t RES = 0;
 const Verbose_t LOG = 1;
 const Verbose_t LOG_END_SIM = 2;

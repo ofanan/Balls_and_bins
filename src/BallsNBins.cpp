@@ -78,11 +78,11 @@ Simulate balls and bins
 void BallsNBins::sim (
 		unsigned numExps,
 		unsigned numSmpls, //number of samples. When 0 (sample all bins). Otherwise, sample numSmpl bins and use the minimal.
-		bool 	 _allowRepetitions // when True, we occasionally may sample the same bin a few time at a single round
+		bool 	 allowRepetitions // when True, we occasionally may sample the same bin a few time at a single round
 		)
 {
 	_numSmpls	= numSmpls; //number of samples. When 0 (sample all bins). Otherwise, sample numSmpl bins and use the minimal.
-	this->_allowRepetitions = _allowRepetitions;
+	_allowRepetitions = allowRepetitions;
 	if (_numSmpls>2) {
 		printErrStrAndExit ("BallsNBins.sim() was called with numSmpls=" + to_string(_numSmpls) + "numSmpls should be either 0, 1, or 2.");
 	}
@@ -90,10 +90,9 @@ void BallsNBins::sim (
 	std::random_device rd;
 	std::mt19937 rng(rd());
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dis(0,  - 1);
+	std::uniform_int_distribution<> dis(0, _numBins- 1);
 	openOutputFiles ();
 	cout << "Starting sim. NumExps=" << numExps << ", numBalls=" << _numBalls << ", numBins=" << _numBins << ", numSmpls=" << _numSmpls << endl;
-
 	for (unsigned exp(0); exp<numExps; exp++) {
 		srand(_seed + exp); // set the seed of random num generation
 		fill(_bins.begin(), _bins.end(), 0); // empty all the bins
@@ -163,15 +162,13 @@ Run a short sim. Used for debugging.
 void runShortSim ()
 {
 	vector <Bin_t> vec= {1, 2, 3, 4};
-	printVecToScreen (vec);
-	vector <Verbose_t> verbose 	= {RES, LOG};
+	vector <Verbose_t> verbose 	= {RES, LOG, DEBUG};
 	BallsNBins bb = BallsNBins (
 		4 , // numBalls
 		2,  // numBins
 		verbose // verbose
 	);
 
-	exit (0);
 	bb.sim (
 		2, // numExps
 		1, // numSmpls
@@ -183,8 +180,8 @@ void runShortSim ()
 Generate a BallsNBins simulator and run it in several configurations.
 *************************************************************************************************************************************************/
 int main() {
-	runShortSim ();
-	vector <Verbose_t> verbose 	= {RES};
+//	runShortSim ();
+	vector <Verbose_t> verbose {RES};
 	const unsigned numExps		= 100;
 	const unsigned numBalls 	= 10000;
 	const unsigned numBins[3] 	= {16, 32, numBalls};
