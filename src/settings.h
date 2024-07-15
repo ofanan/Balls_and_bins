@@ -13,6 +13,7 @@
 #include <string>
 #include <fstream>
 #include <stdint.h>
+#include <unordered_set>
 
 typedef int16_t Verbose_t;
 const Verbose_t RES = 0;
@@ -77,5 +78,12 @@ template<typename Type> double standardDeviation (vector <Type> const &v, double
 }
 
 void printErrStrAndExit (const string &errorMsgStr);
+
+/*************************************************************************************************************************************************
+Returns an unordered set of numSmpls distinct integers, picked u.a.r without replacements
+out of the range 0..N-1.
+*************************************************************************************************************************************************/
+std::unordered_set<unsigned> sampleWoReplacements
+	(unsigned N, unsigned numSmpls, std::mt19937& gen);
 
 #endif

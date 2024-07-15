@@ -106,19 +106,18 @@ void BallsNBins::sim (
 				case 1:
 					_chosenBin = dis(gen);
 					break;
+
 				default:
-					_chosenBin = dis(gen);
-					unsigned scndBin;
-					while (true) {
-						scndBin = dis(gen);
-						if (_allowRepetitions || scndBin!=_chosenBin) { // Assure that we don't sample the same bin again
-							if (_bins[scndBin]<_bins[_chosenBin]) {
-								_chosenBin =scndBin;
-							}
-							break;
-						}
+				Bin_t minLdFound = MAX_BIN_VAL; // init the min load found so far to infinity
+				unordered_set<unsigned>smpldBins = sampleWoReplacements (_numBins, _numSmpls, gen);
+
+				for (auto itr = smpldBins.begin(); itr != smpldBins.end(); ++itr) {
+					if (_bins[*itr] < minLdFound)
+					{
+						_chosenBin = *itr;
+						minLdFound = _bins[*itr];
 					}
-					break;
+				}
 			}
 			_bins[_chosenBin]++;
 			if (verboseIncludes(DEBUG)) {
@@ -180,7 +179,7 @@ void runShortSim ()
 Generate a BallsNBins simulator and run it in several configurations.
 *************************************************************************************************************************************************/
 int main() {
-//	runShortSim ();
+//	runShortSim (); exit (0);
 	vector <Verbose_t> verbose {RES};
 	const unsigned numExps		= 100;
 	const unsigned numBalls 	= 10000;
