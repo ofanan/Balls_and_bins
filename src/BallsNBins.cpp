@@ -8,7 +8,7 @@
 BallsNBins::~BallsNBins ()
 {
 	_bins.clear ();
-	if (verboseIncludes(LOG)) {
+	if (verboseIncludes(LOG) || verboseIncludes(LOG_END_SIM)) {
 		_logFile.close ();
 	}
 	if (verboseIncludes(RES)) {
