@@ -83,8 +83,8 @@ void BallsNBins::sim (
 {
 	_numSmpls	= numSmpls; //number of samples. When 0 (sample all bins). Otherwise, sample numSmpl bins and use the minimal.
 	_allowRepetitions = allowRepetitions;
-	if (_numSmpls>2) {
-		printErrStrAndExit ("BallsNBins.sim() was called with numSmpls=" + to_string(_numSmpls) + "numSmpls should be either 0, 1, or 2.");
+	if (_numSmpls>= (_numBins-1)) {
+		printErrStrAndExit ("BallsNBins.sim() was called with numSmpls=" + to_string(_numSmpls) + "numSmpls should be up to numSmpls-1.");
 	}
 	vector<Bin_t> maxLd(numExps, 0);
 	std::random_device rd;
@@ -179,7 +179,6 @@ void runShortSim ()
 Generate a BallsNBins simulator and run it in several configurations.
 *************************************************************************************************************************************************/
 int main() {
-//	runShortSim (); exit (0);
 	vector <Verbose_t> verbose {RES};
 	const unsigned numExps		= 100;
 	const unsigned numBalls 	= 10000;
