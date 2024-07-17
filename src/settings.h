@@ -74,7 +74,7 @@ template<typename Type> double standardDeviation (vector <Type> const &v, double
         accum += (d - mean) * (d - mean);
     });
 
-    return sqrt(accum / (v.size()-1));
+    return sqrt(accum / (v.size()));
 }
 
 void printErrStrAndExit (const string &errorMsgStr);

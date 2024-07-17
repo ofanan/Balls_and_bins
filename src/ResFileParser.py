@@ -163,6 +163,9 @@ class ResFileParser (object):
 
 if __name__ == '__main__':
     try:
+        vec = [0,1]
+        print (f'mean={np.mean(vec)}, stdev={np.std(vec)}')
+        exit ()
         rfp = ResFileParser()
         rfp.parseFiles (['bb.res'])
         for numBins in [16, 32]:

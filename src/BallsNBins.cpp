@@ -179,6 +179,10 @@ void runShortSim ()
 Generate a BallsNBins simulator and run it in several configurations.
 *************************************************************************************************************************************************/
 int main() {
+	vector<int> v = {0,1};
+	double avg = mean (v);
+	cout << "mean=" << avg << ", stdev=" << standardDeviation (v, avg);
+	return (0);
 	vector <Verbose_t> verbose {RES};
 	const unsigned numExps		= 100;
 	const unsigned numBalls 	= 10000;
