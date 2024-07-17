@@ -63,6 +63,8 @@ template<typename Type> double mean (vector <Type> const &v)
 
 /*************************************************************************************************************************************************
 * Returns the standard deviation of the given vector. If the vector is empty, the average is 0.
+* The stdev is calculated using Bessel's correction:
+* https://www.statisticshowto.com/bessels-correction/#:~:text=So%20why%20do%20we%20subtract,sample%20size)%20corrects%20this%20bias.
 **************************************************************************************************************************************************/
 template<typename Type> double standardDeviation (vector <Type> const &v, double const &mean)
 {
@@ -74,7 +76,9 @@ template<typename Type> double standardDeviation (vector <Type> const &v, double
         accum += (d - mean) * (d - mean);
     });
 
-    return sqrt(accum / (v.size()));
+    // Use minus 1 below due to Bessel's correction
+    // https://www.statisticshowto.com/bessels-correction/#:~:text=So%20why%20do%20we%20subtract,sample%20size)%20corrects%20this%20bias.
+    return sqrt(accum / (v.size()-1));
 }
 
 void printErrStrAndExit (const string &errorMsgStr);
