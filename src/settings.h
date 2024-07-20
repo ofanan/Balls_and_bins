@@ -58,7 +58,7 @@ template<typename Type> double mean (vector <Type> const &v)
         return 0;
     }
     double sum = std::reduce(std::begin(v), std::end(v), 0.0);
-    return  sum / v.size();
+    return  sum / v.size(); // consider changing here to (v.size()-1) to satisfy Bessel's correction. 
 }
 
 /*************************************************************************************************************************************************

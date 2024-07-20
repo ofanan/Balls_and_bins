@@ -18,6 +18,9 @@ void printErrStrAndExit (const string &errorMsgStr)
 /*************************************************************************************************************************************************
 Returns an unordered set of numSmpls distinct integers, picked u.a.r without replacements
 out of the range 0..N-1.
+The algorithm is by Robert Floyd, see:
+https://stackoverflow.com/questions/28287138/c-randomly-sample-k-numbers-from-range-0n-1-n-k-without-replacement
+https://www.nowherenearithaca.com/2013/05/robert-floyds-tiny-and-beautiful.html
 *************************************************************************************************************************************************/
 std::unordered_set<unsigned> sampleWoReplacements
 	(unsigned N,
