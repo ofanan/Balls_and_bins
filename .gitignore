@@ -1,5 +1,6 @@
 .pydevproject
 .*project
+/Debug/
 /Debug/*
 /.settings/*
-/Debug/
+Balls_and_bins.docx
