@@ -23,21 +23,10 @@ YearAvg::YearAvg(double temp, int year, double rain) {
 YearAvg::~YearAvg() {
 	// TODO Auto-generated destructor stub
 }
+
+// Return "this" fields formatted as a single .csv string, where the delimiter is ","
 const std::string YearAvg::toCSV() {
-	/*
-	std::ostringstream strs; // init an empty output buffer string
-	strs << temp; // write the temperature into the buffer
-	std::string tempStr = strs.str(); // copy the buffer's content into tempStr 
-	strs.str(""); // empty the buffer
-	strs << year;
-	std::string yearStr = strs.str();
-	strs.str("");
-	strs << rain;
-	std::string rainStr = strs.str();
-	return tempStr + "," + yearStr + "," + rainStr;
-	*/
 	return std::to_string (this->temp) + "," +
 		   std::to_string (this->year) + "," + 
 		   std::to_string (this->rain);
-
 }

@@ -23,4 +23,5 @@ alias compush='commit; pusher'
 alias cdd='cd $PROJ_PATH'
 alias gee='ge Main.cpp YearAvg.cpp YearAvg.h &'
 alias compile='c; g++ Main.cpp YearAvg.cpp YearAvg.h -o a.out'
+alias compa='compile; ./a.out'
 
