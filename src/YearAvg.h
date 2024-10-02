@@ -9,6 +9,9 @@
 #define YEARAVG_H_
 #include <sstream>
 using namespace std;
+using std::string;
+using std::stringstream;
+
 class YearAvg {
 public:
 	YearAvg();
@@ -38,8 +41,12 @@ public:
 	void setYear(int year) {
 		this->year = year;
 	}
-	const std::string toCSV();
+	
+	const std::string toCSV()const;
+	
+/*	static bool sortByRain(const YearAvg &lhs, const YearAvg &rhs) { return lhs.rain < rhs.rain; }*/
 	static bool sortByRain(const YearAvg &lhs, const YearAvg &rhs) { return lhs.rain < rhs.rain; }
+	
 private:
 	double temp;
 	int year;

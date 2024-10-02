@@ -25,8 +25,10 @@ YearAvg::~YearAvg() {
 }
 
 // Return "this" fields formatted as a single .csv string, where the delimiter is ","
-const std::string YearAvg::toCSV() {
-	return std::to_string (this->temp) + "," +
-		   std::to_string (this->year) + "," + 
-		   std::to_string (this->rain);
+const std::string YearAvg::toCSV()const {
+	return std::to_string (this->getTemp()) + "," +
+		   std::to_string (this->getYear()) + "," + 
+		   std::to_string (this->getRain());
 }
+
+

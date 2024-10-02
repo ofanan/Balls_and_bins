@@ -10,6 +10,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <set>
 #include <fstream>
 #include <algorithm>
 #include "YearAvg.h"
@@ -18,11 +19,19 @@ using namespace std;
 using std::string;
 using std::stringstream;
 
+struct sortYearAvg {
+	size_t operator() (const YearAvg &lhs, const YearAvg &rhs) const
+	{
+		return lhs.getYear() > rhs.getYear();
+	}
+};
+
+static bool cmp (const YearAvg &lhs, const YearAvg &rhs) {return true; }
+
 int main() {
 
-	std::vector <YearAvg> avgs;
+	std::vector <YearAvg> vags;
 	string header;
-	int size = 0;
 
 	string line;
 	ifstream file("yearly.csv");
@@ -36,19 +45,17 @@ int main() {
 		cout << line << '\n';
 		boost::algorithm::split(toks, line, boost::is_any_of(","));
 	// store into array
-	avgs.push_back (YearAvg(stof(toks[0]), stoi(toks[1]), stof(toks[2])));
-	size++;
+	vags.push_back (YearAvg(stof(toks[0]), stoi(toks[1]), stof(toks[2])));
 	}
-	cout << "size of file is " << size << endl;
 	file.close();
-	
-	sort(avgs.begin(), avgs.end(), YearAvg::sortByRain);
+	cout << "size of file is " << vags.size() << endl;
+
+//	std::<YearAvg, cmp>	sags; // (std::make_move_iterator(vags.begin()), std::make_move_iterator(vags.end()));
 	ofstream ofile;
 	ofile.open("yearout.csv");
 	ofile << header << "\n";
-	for (auto const &yearAvg : avgs) {
-		ofile << yearAvg.getTemp() << "," << yearAvg.getYear() << ","
-		<< yearAvg.getRain() << "\n";
+	for (auto const &yearAvg : vags) {
+		ofile << yearAvg.toCSV() << "\n";
 	}
 	ofile.close();
 	return 0;
