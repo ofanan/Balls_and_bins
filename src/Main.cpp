@@ -29,17 +29,21 @@ int main() {
 
 	string line;
 	ifstream file("yearly.csv");
-	if (file.is_open()) {
-		vector <string>	 toks;
-		getline(file, header);
-		while (getline(file, line)) {
-			cout << line << '\n';
-			boost::algorithm::split(toks, line, boost::is_any_of(","));
-		}
-	  // store into array
-		avgs[size] = YearAvg(stof(toks[0]), stoi(toks[1]), stof(toks[2]));
-		size++;
+	if (!file.is_open()) {
+		cout << "Error opening file";
+		return 1;
+	}	
+	vector <string>	 toks;
+	getline(file, header);
+	while (getline(file, line)) {
+		cout << line << '\n';
+		boost::algorithm::split(toks, line, boost::is_any_of(","));
 	}
+  // store into array
+	avgs[size] = YearAvg(stof(toks[0]), stoi(toks[1]), stof(toks[2]));
+	size++;
+	cout << "size of file is " << size << endl;
+	file.close();
 	return 0;
 }
 /*
