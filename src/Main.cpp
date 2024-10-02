@@ -53,17 +53,4 @@ int main() {
 	ofile.close();
 	return 0;
 }
-/*
-	sort(avgs, avgs+SZ, YearAvg::sortByRain);
-	ofstream ofile;
-	ofile.open("yearout.csv");
-	ofile << header << "\n";
-	for (const YearAvg &yearAvg : avgs) {
-		ofile << yearAvg.getTemp() << "," << yearAvg.getYear() << ","
-		<< yearAvg.getRain() << "\n";
-	}
-	ofile.close();
 
-	return 0;
-}
-*/
