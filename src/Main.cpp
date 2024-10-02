@@ -6,7 +6,7 @@
 // Description : Sorts Weather data and stores the sorted data to a file.
 //============================================================================
 
-// #include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string.hpp>
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -14,7 +14,8 @@
 #include <algorithm>
 #include "YearAvg.h"
 
-using namespace std;
+using std::string;
+using std::stringstream;
 
 int main() {
 
@@ -32,15 +33,15 @@ int main() {
 		while (getline(file, line)) {
 			cout << line << '\n';
 
-			std::stringstream sstr(line);
-			std::string token;
+			stringstream sstr(line);
+			string token;
 
 			string toks[3]; // array of 3 string tokens
 			char delim = ',';
 
 			int i = 0;
-			std::string my_input("A,B,EE");
-			std::vector<std::string> results;
+			string my_input("A,B,EE");
+			std::vector<string> results;
 
 			boost::algorithm::split(results, my_input, boost::is_any_of(","));
 

@@ -12,15 +12,15 @@ alias t='tail'
 alias j='jobs'
 alias py='python'
 alias ff='firefox &'
-export PROJ_PATH=/home/ofanan/omnetpp-5.6.2/ofanan/Distributed_SFC_migration
+export PROJ_PATH=/home/ofanan/Balls_and_bins
 alias aliaser='source $PROJ_PATH/.myalias'
 alias myalias='$EDITOR $PROJ_PATH/.myalias &'
 alias ge='gedit'
 alias basher='$EDITOR ~/.bashrc &'
 alias ignorer='ge $PROJ_PATH/.gitignore &'
-alias compile='g++ Make.cpp YearAvg.cpp YearAvg.h -o a.out'
 alias commit='c; git add -A; git commit'
 alias compush='commit; pusher'
 alias cdd='cd $PROJ_PATH'
 alias gee='ge Main.cpp YearAvg.cpp YearAvg.h &'
+alias compile='c; g++ Main.cpp YearAvg.cpp YearAvg.h -o a.out'
 
