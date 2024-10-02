@@ -14,6 +14,7 @@
 #include <algorithm>
 #include "YearAvg.h"
 
+using namespace std;
 using std::string;
 using std::stringstream;
 
@@ -33,24 +34,26 @@ int main() {
 		while (getline(file, line)) {
 			cout << line << '\n';
 
-			stringstream sstr(line);
-			string token;
-
+			vector <string>	 toks;
+			boost::algorithm::split(toks, line, boost::is_any_of(","));
+		}
+	}
+	return 0;
+}
+/*
 			string toks[3]; // array of 3 string tokens
 			char delim = ',';
-
 			int i = 0;
+
 			string my_input("A,B,EE");
-			std::vector<string> results;
-
-			boost::algorithm::split(results, my_input, boost::is_any_of(","));
-
+			std::vector<string> toks;
 			// read
 			while (std::getline(sstr, token, delim)) {
 
 				toks[i] = token;
 				i++;
 			}
+			boost::algorithm::split(results, my_input, boost::is_any_of(","));
 			// the C++ 11 way to read from array.
 			for (const string &token : toks) {
 				cout << "value of token: " << token << endl;
@@ -78,3 +81,4 @@ int main() {
 
 	return 0;
 }
+*/
