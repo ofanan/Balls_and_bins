@@ -27,7 +27,7 @@ struct sortYearAvg {
 	}
 };
 
-static bool cmp (const YearAvg &lhs, const YearAvg &rhs) {return true; }
+//static bool cmp (const YearAvg &lhs, const YearAvg &rhs) {return true; }
 
 int main() {
 
@@ -51,7 +51,7 @@ int main() {
 	file.close();
 	cout << "size of file is " << vags.size() << endl;
 
-//	std::<YearAvg, cmp>	sags; // (std::make_move_iterator(vags.begin()), std::make_move_iterator(vags.end()));
+	std::set <YearAvg, sortYearAvg>	sags; // (std::make_move_iterator(vags.begin()), std::make_move_iterator(vags.end()));
 	ofstream ofile;
 	ofile.open("yearout.csv");
 	ofile << header << "\n";
