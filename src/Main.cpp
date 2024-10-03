@@ -12,6 +12,7 @@
 #include <sstream>
 #include <vector>
 #include <set>
+#include <map>
 #include <fstream>
 #include <algorithm>
 
@@ -53,8 +54,7 @@ int main() {
 	}
 	file.close();
 	cout << "size of file is " << vags.size() << endl;
-	std::vector<YearAvg>().swap(vags); // clear the vector
-
+	
 	ofstream ofile;
 	ofile.open("yearout.csv");
 	ofile << "// By vector:" << endl;
@@ -65,12 +65,42 @@ int main() {
 //	std::set <YearAvg, sortYearAvg>	sags (std::make_move_iterator(vags.begin()), std::make_move_iterator(vags.end())); // using the struct's operator
 	std::set <YearAvg>	sags (std::make_move_iterator(vags.begin()), std::make_move_iterator(vags.end())); // using the operator < defined in YearAvg.h.
 	cout << "Number of unique years in the file is " << sags.size() << endl;
+	std::vector<YearAvg>().swap(vags); // clear the vector
 	
 	ofile << "// By set:" << endl;
 	ofile << header << "\n";
 	for (auto const &yearAvg : sags) {
 		ofile << yearAvg.toCSV() << "\n";
 	}
+	
+	// Copy the set back into the vector vags
+	vags.reserve (sags.size());
+	vags.assign(sags.begin(), sags.end());
+	cout << "size of the sorted vector is " << vags.size() << endl;
+	
+	sort (vags.begin(), vags.end(), YearAvg::sortByRain);
+	ofile << "// By vector, SORTED:" << endl;
+	ofile << header << "\n";
+	for (auto const &yearAvg : vags) {
+		ofile << yearAvg.toCSV() << "\n";
+	}
+
+	std::map <int, float> mags;
+	for (auto const &yearAvg : vags) {
+		mags.insert (pair<int, float> (yearAvg.getYear(), yearAvg.getRain()));
+	}
+	
+	int year;
+	cout << endl << "Please insert your chosen year" << endl;
+	cin >> year;
+	if (auto search = mags.find(year); search!=mags.end()) { // found the requested year in the map
+		cout << "the rain at year " << year << " is " << search->second << endl;
+	}
+	else {
+		cout << "Found no data about the year " << year << endl;
+	}
+	
+	
 	
 	ofile.close();
 	return 0;
