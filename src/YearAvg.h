@@ -19,38 +19,43 @@ public:
 	virtual ~YearAvg();
  
 	double getRain() const {
-		return rain;
+		return rain_;
 	}
 
 	void setRain(double rain) {
-		this->rain = rain;
+		this->rain_ = rain;
 	}
 
 	double getTemp() const {
-		return temp;
+		return temp_;
 	}
 
 	void setTemp(double temp) {
-		this->temp = temp;
+		this->temp_ = temp;
 	}
 
 	int getYear() const {
-		return year;
+		return year_;
 	}
 
 	void setYear(int year) {
-		this->year = year;
+		this->year_ = year;
 	}
 	
+	bool operator < (const YearAvg &yearObj) const
+	{
+		return year_ < yearObj.year_;
+	}
+
 	const std::string toCSV()const;
 	
 /*	static bool sortByRain(const YearAvg &lhs, const YearAvg &rhs) { return lhs.rain < rhs.rain; }*/
-	static bool sortByRain(const YearAvg &lhs, const YearAvg &rhs) { return lhs.rain < rhs.rain; }
+	static bool sortByRain(const YearAvg &lhs, const YearAvg &rhs) { return lhs.rain_ < rhs.rain_; }
 	
 private:
-	double temp;
-	int year;
-	double rain;
+	double temp_;
+	int year_;
+	double rain_;
 
 };
 

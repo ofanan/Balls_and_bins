@@ -14,6 +14,7 @@
 #include <set>
 #include <fstream>
 #include <algorithm>
+
 #include "YearAvg.h"
 
 using namespace std;
@@ -61,7 +62,8 @@ int main() {
 	for (auto const &yearAvg : vags) {
 		ofile << yearAvg.toCSV() << "\n";
 	}
-	std::set <YearAvg, sortYearAvg>	sags (std::make_move_iterator(vags.begin()), std::make_move_iterator(vags.end()));
+	std::set <YearAvg, sortYearAvg>	sags (std::make_move_iterator(vags.begin()), std::make_move_iterator(vags.end())); // using the struct's operator
+//	std::set <YearAvg>	sags (std::make_move_iterator(vags.begin()), std::make_move_iterator(vags.end())); // using the operator < defined in YearAvg.h.
 	cout << "Number of unique years in the file is " << sags.size() << endl;
 	/*
 	ofile << "// By set:" << endl;

@@ -8,15 +8,15 @@
 #include "YearAvg.h"
 
 YearAvg::YearAvg() {
-	this->temp = 0;
-	this->year = 0;
-	this->rain = 0;
+	this->temp_ = 0;
+	this->year_ = 0;
+	this->rain_ = 0;
 
 }
 YearAvg::YearAvg(double temp, int year, double rain) {
-	this->temp = temp;
-	this->year = year;
-	this->rain = rain;
+	this->temp_ = temp;
+	this->year_ = year;
+	this->rain_ = rain;
 
 }
 
