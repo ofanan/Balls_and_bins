@@ -49,11 +49,11 @@ int main() {
 		if (toks.size()<3) { // Skip non-formatted lines
 			continue;
 		}
-	// store into array
-	vags.push_back (YearAvg(stof(toks[0]), stoi(toks[1]), stof(toks[2])));
+		vags.push_back (YearAvg(stof(toks[0]), stoi(toks[1]), stof(toks[2]))); // store into a set	
 	}
 	file.close();
 	cout << "size of file is " << vags.size() << endl;
+	std::vector<YearAvg>().swap(vags); // clear the vector
 
 	ofstream ofile;
 	ofile.open("yearout.csv");
@@ -62,16 +62,16 @@ int main() {
 	for (auto const &yearAvg : vags) {
 		ofile << yearAvg.toCSV() << "\n";
 	}
-	std::set <YearAvg, sortYearAvg>	sags (std::make_move_iterator(vags.begin()), std::make_move_iterator(vags.end())); // using the struct's operator
-//	std::set <YearAvg>	sags (std::make_move_iterator(vags.begin()), std::make_move_iterator(vags.end())); // using the operator < defined in YearAvg.h.
+//	std::set <YearAvg, sortYearAvg>	sags (std::make_move_iterator(vags.begin()), std::make_move_iterator(vags.end())); // using the struct's operator
+	std::set <YearAvg>	sags (std::make_move_iterator(vags.begin()), std::make_move_iterator(vags.end())); // using the operator < defined in YearAvg.h.
 	cout << "Number of unique years in the file is " << sags.size() << endl;
-	/*
+	
 	ofile << "// By set:" << endl;
 	ofile << header << "\n";
 	for (auto const &yearAvg : sags) {
 		ofile << yearAvg.toCSV() << "\n";
 	}
-	*/
+	
 	ofile.close();
 	return 0;
 }
