@@ -85,16 +85,16 @@ int main() {
 		ofile << yearAvg.toCSV() << "\n";
 	}
 
-	std::map <int, float> mags;
+	std::map <int, YearAvg> mags;
 	for (auto const &yearAvg : vags) {
-		mags.insert (pair<int, float> (yearAvg.getYear(), yearAvg.getRain()));
+		mags.insert (pair<int, YearAvg> (yearAvg.getYear(), yearAvg));
 	}
 	
 	int year;
 	cout << endl << "Please insert your chosen year" << endl;
 	cin >> year;
 	if (auto search = mags.find(year); search!=mags.end()) { // found the requested year in the map
-		cout << "the rain at year " << year << " is " << search->second << endl;
+		cout << "the rain at year " << year << " is " << search->second.getRain() << endl;
 	}
 	else {
 		cout << "Found no data about the year " << year << endl;
