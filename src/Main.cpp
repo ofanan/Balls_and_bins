@@ -45,19 +45,31 @@ int main() {
 	while (getline(file, line)) {
 		cout << line << '\n';
 		boost::algorithm::split(toks, line, boost::is_any_of(","));
+		if (toks.size()<3) { // Skip non-formatted lines
+			continue;
+		}
 	// store into array
 	vags.push_back (YearAvg(stof(toks[0]), stoi(toks[1]), stof(toks[2])));
 	}
 	file.close();
 	cout << "size of file is " << vags.size() << endl;
 
-	std::set <YearAvg, sortYearAvg>	sags; // (std::make_move_iterator(vags.begin()), std::make_move_iterator(vags.end()));
 	ofstream ofile;
 	ofile.open("yearout.csv");
+	ofile << "// By vector:" << endl;
 	ofile << header << "\n";
 	for (auto const &yearAvg : vags) {
 		ofile << yearAvg.toCSV() << "\n";
 	}
+	std::set <YearAvg, sortYearAvg>	sags (std::make_move_iterator(vags.begin()), std::make_move_iterator(vags.end()));
+	cout << "Number of unique years in the file is " << sags.size() << endl;
+	/*
+	ofile << "// By set:" << endl;
+	ofile << header << "\n";
+	for (auto const &yearAvg : sags) {
+		ofile << yearAvg.toCSV() << "\n";
+	}
+	*/
 	ofile.close();
 	return 0;
 }
