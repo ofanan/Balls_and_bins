@@ -6,4 +6,5 @@
 Balls_and_bins.docx
 .alias_pusher*
 .pydev*
+/src/_pycache_/*
 
