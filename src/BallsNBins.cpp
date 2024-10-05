@@ -182,7 +182,9 @@ int main() {
 	vector<int> v = {0,1};
 	double avg = mean (v);
 	cout << "mean=" << avg << ", stdev=" << standardDeviation (v, avg);
+//	error ("rgrgrg");
 	return (0);
+	/*
 	vector <Verbose_t> verbose {Verbose_t::RES};
 	const unsigned num_exps		= 100;
 	const unsigned num_balls 	= 10000;
@@ -214,4 +216,5 @@ int main() {
 			true //with_replacements_
 		);
 	}
+	*/
 }
