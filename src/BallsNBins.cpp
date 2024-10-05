@@ -8,10 +8,10 @@
 BallsNBins::~BallsNBins ()
 {
 	bins_.clear ();
-	if (verboseIncludes(LOG) || verboseIncludes(LOG_END_SIM)) {
+	if (verboseIncludes(Verbose_t::LOG) || verboseIncludes(Verbose_t::LOG_END_SIM)) {
 		log_file_.close ();
 	}
-	if (verboseIncludes(RES)) {
+	if (verboseIncludes(Verbose_t::RES)) {
 		res_file_.close ();
 	}
 }
@@ -22,11 +22,11 @@ Open the output files:.log, .res, based on the chosen verbose option.
 *************************************************************************************************************************************************/
 void BallsNBins::openOutputFiles ()
 {
-	if (verboseIncludes(LOG) || verboseIncludes(LOG_END_SIM)) {
+	if (verboseIncludes(Verbose_t::LOG) || verboseIncludes(Verbose_t::LOG_END_SIM)) {
 		string logFileName = "log_files/bb_" + genSettingStr() + ".log";
 		log_file_.open(logFileName);
 	}
-	if (verboseIncludes(RES)) {
+	if (verboseIncludes(Verbose_t::RES)) {
 		string resFileName = "res/bb.res";
 		if (filesystem::exists(resFileName)) {
 			  res_file_.open(resFileName, std::ios_base::app);
@@ -120,24 +120,24 @@ void BallsNBins::sim (
 				}
 			}
 			bins_[chosen_bin_]++;
-			if (verboseIncludes(DEBUG)) {
+			if (verboseIncludes(Verbose_t::DEBUG)) {
 				if (bins_[chosen_bin_]>=MAX_BIN_VAL) {
 					printErrStrAndExit ("In BallsNBins.sim(). bin" + to_string(chosen_bin_) + " reached its maximal value. Please use a larger bit width for Bin_t in BallsNBins.h");
 				}
 			}
-			if (verboseIncludes(LOG) && exp==0) { //consider logging only in the first experiment
+			if (verboseIncludes(Verbose_t::LOG) && exp==0) { //consider logging only in the first experiment
 				printAllBinsToLog ();
 			}
 		} // end of this experiment
 		maxLd[exp] = *std::max_element(std::begin(bins_), std::end(bins_));
 	}
-	if (verboseIncludes(LOG_END_SIM)) { //consider logging only the last experiment
+	if (verboseIncludes(Verbose_t::LOG_END_SIM)) { //consider logging only the last experiment
 		printAllBinsToLog ();
 		log_file_ << "At the end of simulation:" << endl;
 		log_file_ << "maxLd=";
 		printVecToFile (log_file_, maxLd);
 	}
-	if (verboseIncludes(RES)) {
+	if (verboseIncludes(Verbose_t::RES)) {
 		double avg 	 = mean (maxLd);
 		double stdev = standardDeviation (maxLd, avg);
 		res_file_ << genSettingStr() << " | avg=" << avg << " | std_over_avg=" << stdev/avg << endl;
@@ -161,7 +161,7 @@ Run a short sim. Used for debugging.
 void runShortSim ()
 {
 	vector <Bin_t> vec= {1, 2, 3, 4};
-	vector <Verbose_t> verbose 	= {RES, LOG, DEBUG};
+	vector <Verbose_t> verbose 	= {Verbose_t::RES, Verbose_t::LOG, Verbose_t::DEBUG};
 	BallsNBins bb = BallsNBins (
 		4 , // numBalls
 		2,  // numBins
@@ -183,7 +183,7 @@ int main() {
 	double avg = mean (v);
 	cout << "mean=" << avg << ", stdev=" << standardDeviation (v, avg);
 	return (0);
-	vector <Verbose_t> verbose {RES};
+	vector <Verbose_t> verbose {Verbose_t::RES};
 	const unsigned numExps		= 100;
 	const unsigned numBalls 	= 10000;
 	const unsigned numBins[3] 	= {16, 32, numBalls};

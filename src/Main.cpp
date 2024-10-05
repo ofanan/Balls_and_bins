@@ -7,7 +7,7 @@
 // Description : Sorts Weather data and stores the sorted data to a file.
 //============================================================================
 
-#include <boost/algorithm/string.hpp>
+//#include <boost/algorithm/string.hpp>
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -46,7 +46,7 @@ int main() {
 	getline(file, header);
 	while (getline(file, line)) {
 		cout << line << '\n';
-		boost::algorithm::split(toks, line, boost::is_any_of(","));
+//		boost::algorithm::split(toks, line, boost::is_any_of(","));
 		if (toks.size()<3) { // Skip non-formatted lines
 			continue;
 		}
