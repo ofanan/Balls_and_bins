@@ -20,3 +20,11 @@ balls10000.bins10000.d0.R0 | avg=1 | std_over_avg=0
 balls10000.bins10000.d1.R0 | avg=6.76 | std_over_avg=0.101098
 balls10000.bins10000.d2.R0 | avg=3.02 | std_over_avg=0.0465912
 balls10000.bins10000.d2.R1 | avg=3.07 | std_over_avg=0.0835285
+balls10000.bins16.d0.R0 | avg=625 | std_over_avg=0
+balls10000.bins16.d1.R0 | avg=670.01 | std_over_avg=0.0183023
+balls10000.bins16.d2.R0 | avg=626.17 | std_over_avg=0.000602912
+balls10000.bins16.d2.R1 | avg=626.32 | std_over_avg=0.000782185
+balls10000.bins32.d0.R0 | avg=313 | std_over_avg=0
+balls10000.bins32.d1.R0 | avg=349.69 | std_over_avg=0.0276889
+balls10000.bins32.d2.R0 | avg=314.04 | std_over_avg=0.00100391
+balls10000.bins32.d2.R1 | avg=314.05 | std_over_avg=0.00104927
