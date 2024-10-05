@@ -76,24 +76,24 @@ string BallsNBins::genSettingStr ()
 Simulate balls and bins
 *************************************************************************************************************************************************/
 void BallsNBins::sim (
-		unsigned numExps,
-		unsigned numSmpls, //number of samples. When 0 (sample all bins). Otherwise, sample numSmpl bins and use the minimal.
-		bool 	 allowRepetitions // when True, we occasionally may sample the same bin a few time at a single round
+		unsigned num_exps,
+		unsigned num_smpls, //number of samples. When 0 (sample all bins). Otherwise, sample numSmpl bins and use the minimal.
+		bool 	 with_replacements // when True, we occasionally may sample the same bin a few time at a single round
 		)
 {
-	num_smpls_	= numSmpls; //number of samples. When 0 (sample all bins). Otherwise, sample numSmpl bins and use the minimal.
-	with_replacements_ = allowRepetitions;
+	num_smpls_	= num_smpls; //number of samples. When 0 (sample all bins). Otherwise, sample numSmpl bins and use the minimal.
+	with_replacements_ = with_replacements;
 	if (num_smpls_>= (num_bins_-1)) {
-		printErrStrAndExit ("BallsNBins.sim() was called with numSmpls=" + to_string(num_smpls_) + "numSmpls should be up to numSmpls-1.");
+		printErrStrAndExit ("BallsNBins.sim() was called with num_smpls=" + to_string(num_smpls_) + "num_smpls should be up to num_smpls-1.");
 	}
-	vector<Bin_t> maxLd(numExps, 0);
+	vector<Bin_t> maxLd(num_exps, 0);
 	std::random_device rd;
 	std::mt19937 rng(rd());
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<> dis(0, num_bins_- 1);
 	openOutputFiles ();
-	cout << "Starting sim. NumExps=" << numExps << ", numBalls=" << num_balls_ << ", numBins=" << num_bins_ << ", numSmpls=" << num_smpls_ << endl;
-	for (unsigned exp(0); exp<numExps; exp++) {
+	cout << "Starting sim. NumExps=" << num_exps << ", num_balls=" << num_balls_ << ", num_bins=" << num_bins_ << ", num_smpls=" << num_smpls_ << endl;
+	for (unsigned exp(0); exp<num_exps; exp++) {
 		srand(seed_ + exp); // set the seed of random num generation
 		fill(bins_.begin(), bins_.end(), 0); // empty all the bins
 		for (ball_ = 0; ball_<num_balls_; ball_++) {
@@ -163,14 +163,14 @@ void runShortSim ()
 	vector <Bin_t> vec= {1, 2, 3, 4};
 	vector <Verbose_t> verbose 	= {Verbose_t::RES, Verbose_t::LOG, Verbose_t::DEBUG};
 	BallsNBins bb = BallsNBins (
-		4 , // numBalls
-		2,  // numBins
+		4 , // num_balls
+		2,  // num_bins
 		verbose // verbose
 	);
 
 	bb.sim (
-		2, // numExps
-		1, // numSmpls
+		2, // num_exps
+		1, // num_smpls
 		false //with_replacements_
 	);
 }
@@ -184,33 +184,33 @@ int main() {
 	cout << "mean=" << avg << ", stdev=" << standardDeviation (v, avg);
 	return (0);
 	vector <Verbose_t> verbose {Verbose_t::RES};
-	const unsigned numExps		= 100;
-	const unsigned numBalls 	= 10000;
-	const unsigned numBins[3] 	= {16, 32, numBalls};
-	for (unsigned idx(0); idx<sizeof(numBins)/sizeof(unsigned); idx++) {
-		for (unsigned numSmpls(0); numSmpls<3; numSmpls++) {
+	const unsigned num_exps		= 100;
+	const unsigned num_balls 	= 10000;
+	const unsigned num_bins[3] 	= {16, 32, num_balls};
+	for (unsigned idx(0); idx<sizeof(num_bins)/sizeof(unsigned); idx++) {
+		for (unsigned num_smpls(0); num_smpls<3; num_smpls++) {
 			BallsNBins bb = BallsNBins (
-				numBalls,
-				numBins[idx],
+				num_balls,
+				num_bins[idx],
 				verbose
 			);
 
 			bb.sim (
-				numExps,
-				numSmpls,
+				num_exps,
+				num_smpls,
 				false //with_replacements_
 			);
 		}
 
 		// Additional single run with 2 smpls, allowing repetitions.
 		BallsNBins bb = BallsNBins (
-			numBalls,
-			numBins[idx],
+			num_balls,
+			num_bins[idx],
 			verbose
 		);
 		bb.sim (
-			numExps,
-			2, // numSmpls
+			num_exps,
+			2, // num_smpls
 			true //with_replacements_
 		);
 	}
